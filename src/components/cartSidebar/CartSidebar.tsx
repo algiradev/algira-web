@@ -26,8 +26,6 @@ export default function CartSidebar() {
 
   const handleClearCart = () => {
     clearCart();
-    // Limpiar tickets de cada rifa en query params si estás en la página de tickets
-    router.replace(window.location.pathname);
   };
 
   const handleCheckout = () => {
@@ -44,7 +42,7 @@ export default function CartSidebar() {
 
       <div className={`${styles.sidebar} ${isSidebarOpen ? styles.open : ""}`}>
         <div className={styles.header}>
-          <h2>Tu carrito</h2>
+          <h2>Mi carrito</h2>
           <button onClick={closeSidebar} className={styles.closeBtn}>
             <X size={20} color="#003748" />
           </button>
@@ -60,7 +58,7 @@ export default function CartSidebar() {
 
         <div className={styles.content}>
           {cart.length === 0 ? (
-            <p className={styles.empty}>El carrito está vacío</p>
+            <p className={styles.empty}>No hay rifas agregadas al carrito</p>
           ) : (
             cart.map((item) => (
               <div key={item.raffleId} className={styles.item}>

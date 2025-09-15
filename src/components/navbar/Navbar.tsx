@@ -192,7 +192,7 @@ export default function Navbar({ options = [], onCartToggle }: NavbarProps) {
             onClick={openSidebar}
             aria-label="Abrir carrito"
           >
-            <ShoppingCart size={24} />
+            <ShoppingCart size={24} color="white" />
             {cartCount > 0 && (
               <span className={styles.cartBadge}>{cartCount}</span>
             )}

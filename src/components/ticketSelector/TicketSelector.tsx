@@ -20,7 +20,6 @@ interface TicketSelectorProps {
   selectedTickets: Ticket[];
   unavailableTickets: Ticket[];
   handledChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  handleOnClick: () => void;
   onAddToCartOpenSidebar?: () => void;
 }
 
@@ -30,25 +29,12 @@ export default function TicketSelector({
   selectedTickets,
   unavailableTickets,
   handledChange,
-  handleOnClick,
-  onAddToCartOpenSidebar,
 }: TicketSelectorProps) {
   const [opts, setOpts] = useState<Ticket[]>(options);
   const { addToCart, openSidebar } = useCart();
   const sortedTickets = [...unavailableTickets].sort(
     (a, b) => a.number - b.number
   );
-
-  useEffect(() => {
-    if (sortedTickets.length > 0) {
-      const list = sortedTickets.map((t) => t.number).join(", ");
-      if (sortedTickets.length === 1) {
-        toast.info(`El número ${sortedTickets[0].number} no está disponible.`);
-      } else {
-        toast.info(`Los siguientes números no están disponibles: ${list}.`);
-      }
-    }
-  }, [sortedTickets]);
 
   const handleListFilter = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.value) {
@@ -96,7 +82,9 @@ export default function TicketSelector({
             className={styles.hiddenInput}
           />
           <span
-            className={`${styles.ticket} ${isSelected ? styles.selected : ""}`}
+            className={`${styles.ticket} ${isSelected ? styles.selected : ""}${
+              isUnavailable ? styles.unavailable : ""
+            }`}
           >
             {opt.number}
           </span>

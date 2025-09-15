@@ -5,7 +5,7 @@ import { getRaffles } from "../../lib/api/raffle";
 import Loader from "../../components/loader/Loader";
 import { MyRaffle } from "../../types/raffle";
 import styles from "./Raffleroom.module.css";
-import Raffle from "../raffle/page";
+import Raffle from "@/components/raffle/Raffle";
 
 const STRAPI_URL =
   process.env.NEXT_PUBLIC_STRAPI_URL || "http://localhost:1337";

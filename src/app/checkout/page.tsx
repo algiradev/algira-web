@@ -1,14 +1,13 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import DropIn from "braintree-web-drop-in-react";
-import type { Dropin as BraintreeDropin, Dropin } from "braintree-web-drop-in";
+import type { Dropin } from "braintree-web-drop-in";
 import { useCart } from "@/context/useCart";
 import { useAuth } from "@/context/AuthContext";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import type { PaymentResponse } from "@/types/payment";
 import styles from "./Checkout.module.css";
-import { generateClientToken } from "@/lib/api/braintree";
+import { generateClientToken, processPayment } from "@/lib/api/braintree";
 import dropin from "braintree-web-drop-in";
 import { toast } from "react-toastify";
 
@@ -16,7 +15,6 @@ export default function CheckoutPage() {
   const { user } = useAuth();
   const { cart, clearCart } = useCart();
   const router = useRouter();
-  const searchParams = useSearchParams();
 
   const [clientToken, setClientToken] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
@@ -27,6 +25,7 @@ export default function CheckoutPage() {
 
   useEffect(() => {
     if (!user) {
+      toast.info("Por favor, ingrese para poder realizar compras");
       router.push(`/login?redirect=/checkout`);
     }
   }, [user, router]);
@@ -77,27 +76,36 @@ export default function CheckoutPage() {
     };
   }, [clientToken]);
 
+  useEffect(() => {
+    if (cart.length === 0) {
+      router.push("/");
+    }
+  }, [cart, router]);
+
   const handleBuy = async () => {
     if (!dropinInstance.current) return;
     setLoading(true);
     try {
       const payload = await dropinInstance.current.requestPaymentMethod();
-      const ticketsIds = cart.flatMap((item) => item.tickets.map((t) => t.id));
 
-      const res = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/braintree/process-payment`,
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            paymentMethodNonce: payload.nonce,
-            tickets: ticketsIds,
-          }),
-        }
+      const rafflesIds = cart.map((item) => item.raffleId);
+      const ticketsForPayment = cart.flatMap((item) =>
+        item.tickets.map((t) => ({
+          number: t.number ?? 0,
+          raffleId: item.raffleId,
+        }))
+      );
+      const totalAmount = cart.reduce(
+        (sum, item) => sum + (item.price ?? 0) * item.tickets.length,
+        0
       );
 
-      const data: PaymentResponse = await res.json();
-      setOrderResult(data);
+      const data = await processPayment({
+        paymentMethodNonce: payload.nonce,
+        amount: totalAmount,
+        raffles: rafflesIds,
+        tickets: ticketsForPayment,
+      });
 
       if (data.success) {
         clearCart();
@@ -146,11 +154,7 @@ export default function CheckoutPage() {
       )}
 
       {/* Botón de pago */}
-      <button
-        onClick={handleBuy}
-        disabled={loading || !dropinInstance.current || cart.length === 0}
-        className={styles.payButton}
-      >
+      <button onClick={handleBuy} className={styles.payButton}>
         {loading ? "Procesando..." : "Pagar ahora"}
       </button>
 

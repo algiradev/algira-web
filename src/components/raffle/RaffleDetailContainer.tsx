@@ -19,7 +19,6 @@ export default function RaffleDetailContainer({ raffleId }: Props) {
     const fetchRaffle = async () => {
       try {
         const data = await getRaffleById(raffleId);
-        console.log(data);
         setRaffle(data);
       } catch (err) {
         console.error(err);

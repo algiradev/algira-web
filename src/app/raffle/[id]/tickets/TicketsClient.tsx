@@ -1,16 +1,15 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import TicketSelector, {
   Ticket,
 } from "@/components/ticketSelector/TicketSelector";
 import styles from "./TicketsClient.module.css";
 import { MyRaffle } from "@/types/raffle";
-import Raffle from "../../page";
-import { MyTicket } from "@/types/ticket";
 import BackButton from "@/components/button/BackButton";
 import { useSearchParams, useRouter, usePathname } from "next/navigation";
-import { useCart } from "@/context/useCart";
+import Raffle from "@/components/raffle/Raffle";
+import { getPurchasedTickets } from "@/lib/api/ticket";
 
 type TicketsClientProps = {
   raffle: MyRaffle;
@@ -23,9 +22,8 @@ export default function TicketsClient({ raffle }: TicketsClientProps) {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
+  const [takenTickets, setTakenTickets] = useState<number[]>([]);
 
-  const { removeFromCart } = useCart();
-  // parsear tickets desde params al inicio
   const preselectedTicketsParam = searchParams.get("tickets");
   const preselectedTickets: Ticket[] = preselectedTicketsParam
     ? preselectedTicketsParam.split(",").map((num, i) => ({
@@ -46,13 +44,23 @@ export default function TicketsClient({ raffle }: TicketsClientProps) {
   );
 
   // 2. Filtramos los no disponibles según raffle.tickets
-  const unavailable: Ticket[] =
-    raffle.tickets
-      ?.filter((t: MyTicket) => t.status_ticket !== "a")
-      .map((t) => ({
-        id: String(t.number ?? 0),
-        number: t.number ?? 0,
-      })) ?? [];
+
+  // ...
+
+  const unavailable: Ticket[] = useMemo(() => {
+    const takenSet = new Set<number>([
+      // tickets marcados como inactivos en la rifa
+      ...(raffle.tickets
+        ?.filter((t) => t.status_ticket !== "a")
+        .map((t) => t.number ?? 0) ?? []),
+      // tickets ya comprados por otros usuarios (desde polling)
+      ...takenTickets,
+    ]);
+
+    return tickets
+      .filter((t) => takenSet.has(t.number))
+      .map((t) => ({ id: String(t.id), number: t.number }));
+  }, [raffle.tickets, takenTickets, tickets]);
 
   // manejar selección y actualizar query params
   const handledChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -73,11 +81,6 @@ export default function TicketsClient({ raffle }: TicketsClientProps) {
       query.delete("tickets");
     }
     router.replace(`${pathname}?${query.toString()}`);
-  };
-
-  const handleOnClick = () => {
-    console.log("Tickets seleccionados:", selected);
-    // Aquí puedes agregar al carrito o navegar a paso2
   };
 
   const total = selected.length * (raffle.price ?? 0);
@@ -110,6 +113,25 @@ export default function TicketsClient({ raffle }: TicketsClientProps) {
     setSelected(updatedSelected);
   }, [searchParams]);
 
+  useEffect(() => {
+    if (!raffle.id) return;
+
+    const fetchTakenTickets = async () => {
+      try {
+        const taken = await getPurchasedTickets(raffle.id ?? 0);
+        setTakenTickets(taken);
+      } catch (err) {
+        console.error("Error fetching taken tickets:", err);
+      }
+    };
+
+    fetchTakenTickets(); // primera llamada inmediata
+
+    const interval = setInterval(fetchTakenTickets, 5000); // cada 5 segundos
+
+    return () => clearInterval(interval); // limpiar al desmontar
+  }, [raffle.id]);
+
   return (
     <div className={styles.container}>
       <div className={styles.backButtonWrapper}>
@@ -121,7 +143,6 @@ export default function TicketsClient({ raffle }: TicketsClientProps) {
           selectedTickets={selected}
           unavailableTickets={unavailable}
           handledChange={handledChange}
-          handleOnClick={handleOnClick}
           raffle={formattedRaffle}
         />
       </div>

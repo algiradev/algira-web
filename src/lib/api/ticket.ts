@@ -14,16 +14,26 @@ const API_URL =
   process.env.NEXT_PUBLIC_STRAPI_URL ?? "http://localhost:1337/api";
 
 /**
- * Obtener todos los tickets
+ * Obtener tickets comprados (ocupados) de una rifa
  */
-export async function getTickets(): Promise<Ticket[]> {
-  const res = await fetch(`${API_URL}/tickets`, { method: "GET" });
+export async function getPurchasedTickets(raffleId: number): Promise<number[]> {
+  try {
+    const res = await fetch(`${API_URL}/tickets/taken?raffleId=${raffleId}`, {
+      method: "GET",
+    });
 
-  if (!res.ok) {
-    throw new Error("No se pudieron obtener los tickets.");
+    if (!res.ok) {
+      console.error("Error fetching purchased tickets", await res.text());
+      return [];
+    }
+
+    const data = await res.json();
+    // El backend devuelve { takenNumbers: number[] }
+    return data.takenNumbers ?? [];
+  } catch (err) {
+    console.error("Error fetching purchased tickets", err);
+    return [];
   }
-
-  return res.json();
 }
 
 /**

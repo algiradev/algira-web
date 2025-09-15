@@ -28,9 +28,16 @@ export async function generateClientToken(): Promise<string> {
 // ===============================
 // PROCESS PAYMENT
 // ===============================
+interface TicketForPayment {
+  number: number;
+  raffleId: number;
+}
+
 interface ProcessPaymentBody {
   paymentMethodNonce: string;
-  tickets: number[];
+  amount: number;
+  raffles: number[];
+  tickets: TicketForPayment[];
 }
 
 export async function processPayment(body: ProcessPaymentBody) {

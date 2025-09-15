@@ -1,12 +1,9 @@
 import RaffleDetailContainer from "@/components/raffle/RaffleDetailContainer";
+import { PageProps } from "@/types/next";
 import { notFound } from "next/navigation";
 
-type Props = {
-  params: { id: string };
-};
-
-export default function RaffleDetailPage({ params }: Props) {
-  const { id } = params;
+export default async function RaffleDetailPage({ params }: PageProps) {
+  const { id } = await params;
 
   if (!id) return notFound();
 
