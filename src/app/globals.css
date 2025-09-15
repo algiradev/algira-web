@@ -1,6 +1,9 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  --primary-color: #003748;
+  --secundary-color: #00897d;
+  --text-error: #d32f2f;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -22,6 +25,7 @@ body {
   font-family: Arial, Helvetica, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  margin: 0;
 }
 
 * {

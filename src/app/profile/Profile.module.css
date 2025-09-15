@@ -1,0 +1,335 @@
+@keyframes fadeInLeft {
+  from {
+    transform: translateX(100vw);
+    opacity: 0.1;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes fadeInRight {
+  from {
+    transform: translateX(-100vw);
+    opacity: 0.1;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+.profile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 70%;
+  margin: 0 auto;
+  margin-top: 7rem;
+}
+
+.profile__header {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  background-color: transparent;
+  width: 100%;
+  height: 35vh;
+  color: var(--color-text);
+  margin: 0 auto;
+  /* margin-top: 3rem; */
+  padding: 1rem;
+}
+
+.buttons__wrapper {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  margin-top: -35px;
+  margin-bottom: 15px;
+}
+
+.profile__section_info {
+  position: relative;
+  display: flex;
+  justify-content: space-around;
+  align-items: flex-start;
+  padding: 1rem;
+  background: transparent;
+  width: 100%;
+  height: 100%;
+  color: var(--color-text);
+}
+
+.profile__avatar,
+.profile__myaccount {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  top: -150px;
+  background: rgba(255, 255, 255, 0.031);
+  border-radius: 0.5rem;
+  /* border: 1px solid #cecdcd; */
+  box-shadow: 0 5px 35px rgba(0, 0, 0, 0.2);
+  padding: 2rem 0rem;
+  width: 100%;
+  max-width: 600px;
+  min-height: 650px;
+  margin: 1rem;
+  color: white;
+}
+
+.profile__avatar {
+  animation: 1s cubic-bezier(0.16, 1, 0.3, 1) fadeInRight;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 200px;
+}
+
+.profile__avatar::after {
+  content: "";
+  position: absolute;
+  top: 5px;
+  left: 5px;
+  right: 5px;
+  bottom: 5px;
+  border-radius: 5px;
+  pointer-events: none;
+  background: linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 0.3) 0%,
+    rgba(255, 255, 255, 0.1) 15%,
+    transparent 50%,
+    transparent 85%,
+    rgba(255, 255, 255, 0.3) 100%
+  );
+}
+
+.profile__myaccount {
+  animation: 1s cubic-bezier(0.16, 1, 0.3, 1) fadeInLeft;
+  max-width: 1000px;
+}
+
+.profile__myaccount h2 {
+  margin-bottom: 2rem;
+}
+
+.profile__myaccount::after {
+  content: "";
+  position: absolute;
+  top: 5px;
+  left: 5px;
+  right: 5px;
+  bottom: 5px;
+  border-radius: 5px;
+  pointer-events: none;
+  background: linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 0.3) 0%,
+    rgba(255, 255, 255, 0.1) 15%,
+    transparent 50%,
+    transparent 85%,
+    rgba(255, 255, 255, 0.3) 100%
+  );
+}
+
+.profile__avatar header {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 120px;
+}
+
+.profile__shape {
+  user-select: none;
+  top: -50%;
+  position: absolute;
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  overflow: hidden;
+  outline: 10px solid rgba(255, 255, 255, 0.668);
+  z-index: 2;
+}
+
+.profile__shape:hover {
+  cursor: pointer;
+}
+
+.profile__shape:hover ion-icon {
+  position: absolute;
+  display: inline-block;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 60px;
+  background: #00000070;
+  transition: 0.5s;
+}
+
+.profile__shape__input_image {
+  z-index: 2;
+  display: none;
+}
+
+.profile__shape img {
+  width: 100%;
+  height: 100%;
+}
+
+.profile__size {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 20px 20px;
+  transition: 0.5s;
+}
+
+.profile__size h3 {
+  color: var(--color-text);
+  font-weight: 400;
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-right: 10px;
+}
+
+.profile__size span {
+  width: 26px;
+  height: 26px;
+  text-align: center;
+  line-height: 26px;
+  font-size: 14px;
+  font-weight: bold;
+  display: inline-block;
+  color: #003748;
+  background: #cdeded;
+  margin: 0 5px;
+  transition: 0.5s;
+  border-radius: 4px;
+}
+
+.formGroup {
+  margin-bottom: 0.6rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.label {
+  text-align: left;
+  align-self: flex-start;
+  margin-bottom: 0.25rem;
+  font-weight: bold;
+  font-size: 1.1rem;
+  color: white;
+}
+
+.input,
+.select {
+  padding: 0.5rem;
+  border-radius: 6px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  font-size: 1rem;
+  width: 100%;
+  background: transparent;
+  color: white;
+  box-shadow: inset 0 0 25px rgba(0, 0, 0, 0.2);
+}
+
+.select {
+  appearance: none;
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+  background-repeat: no-repeat;
+  background-position: right 0.5rem center;
+  background-size: 1rem;
+}
+
+.select .option {
+  color: #000;
+}
+
+.select:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.error {
+  align-self: flex-start;
+  color: var(--text-error, red);
+  font-weight: bold;
+  font-size: 0.8rem;
+  margin-top: 0.25rem;
+  min-height: 1rem;
+}
+
+.visible {
+  visibility: visible;
+}
+
+.submitButton {
+  display: flex;
+  margin: 0 auto;
+}
+
+.submitButton:active {
+  transform: translateY(1px);
+}
+
+.submitButton:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.phoneInput {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  max-width: 305px;
+  color: white;
+}
+
+.phoneInput :global(.PhoneInputCountry) {
+  padding: 0.5rem;
+  border-radius: 6px 0 0 6px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-right: none;
+  margin: 0;
+  background: transparent;
+  box-shadow: inset 0 0 25px rgba(0, 0, 0, 0.2);
+  display: flex;
+  align-items: center;
+}
+
+.phoneInput :global(.PhoneInputInput) {
+  padding: 0.5rem;
+  border-radius: 0 6px 6px 0;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-left: none;
+  font-size: 1rem;
+  width: 100%;
+  background: transparent;
+  color: white;
+  box-shadow: inset 0 0 25px rgba(0, 0, 0, 0.2);
+}
+
+.phoneInput :global(.PhoneInputCountryIcon) {
+  width: 24px;
+  height: 16px;
+  margin-right: 0.5rem;
+}
+
+.phoneInput :global(.PhoneInputInput:disabled) {
+  opacity: 0.6;
+  cursor: not-allowed;
+}

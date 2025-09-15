@@ -1,0 +1,34 @@
+.container {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  background: linear-gradient(
+    to bottom right,
+    rgba(255, 255, 255, 0.2),
+    rgba(255, 255, 255, 0.05)
+  );
+  box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.5), -1px -1px 2px #aaa,
+    1px 1px 2px #555;
+  backdrop-filter: blur(0.8rem);
+  border-radius: 0.5rem;
+  width: 70%;
+  height: 80vh;
+  margin: 0 auto;
+}
+
+.backButtonWrapper {
+  position: absolute;
+  left: 1%;
+  top: 1%;
+}
+
+.left {
+  flex: 2;
+  padding-right: 10px;
+}
+
+.right {
+  flex: 1;
+}

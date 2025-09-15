@@ -9,17 +9,45 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@heroui/dropdown": "^2.3.24",
+    "@heroui/navbar": "^2.2.22",
+    "@heroui/react": "^2.8.2",
+    "@hookform/resolvers": "^5.2.1",
+    "@nextui-org/react": "^2.6.11",
+    "axios": "^1.11.0",
+    "braintree-web": "^3.125.0",
+    "braintree-web-drop-in-react": "^1.2.1",
+    "libphonenumber-js": "^1.12.12",
+    "lucide-react": "^0.544.0",
+    "nanoid": "^5.1.5",
+    "next": "15.4.5",
+    "next-auth": "^4.24.11",
     "react": "19.1.0",
     "react-dom": "19.1.0",
-    "next": "15.4.5"
+    "react-hook-form": "^7.62.0",
+    "react-icons": "^5.5.0",
+    "react-inner-image-zoom": "^4.0.1",
+    "react-phone-number-input": "^3.4.12",
+    "react-toastify": "^11.0.5",
+    "react-tooltip": "^5.29.1",
+    "shortid": "^2.2.17",
+    "swiper": "^11.2.10",
+    "yet-another-react-lightbox": "^3.25.0",
+    "zod": "^4.0.17"
   },
   "devDependencies": {
-    "typescript": "^5",
+    "@eslint/eslintrc": "^3",
+    "@types/axios": "^0.14.4",
+    "@types/braintree-web": "^3.96.17",
+    "@types/braintree-web-drop-in": "^1.39.4",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "autoprefixer": "^10.4.21",
     "eslint": "^9",
     "eslint-config-next": "15.4.5",
-    "@eslint/eslintrc": "^3"
+    "postcss": "^8.5.6",
+    "tailwindcss": "^4.1.12",
+    "typescript": "^5"
   }
 }
