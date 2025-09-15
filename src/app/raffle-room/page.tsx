@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { getRaffles } from "../../lib/api/raffle";
 import Loader from "../../components/loader/Loader";
 import { MyRaffle } from "../../types/raffle";
-import styles from "./RaffleRoom.module.css";
+import styles from "./Raffleroom.module.css";
 import Raffle from "../raffle/page";
 
 const STRAPI_URL =
