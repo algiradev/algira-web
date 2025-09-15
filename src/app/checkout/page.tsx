@@ -7,7 +7,7 @@ import { useCart } from "@/context/useCart";
 import { useAuth } from "@/context/AuthContext";
 import { useRouter, useSearchParams } from "next/navigation";
 import type { PaymentResponse } from "@/types/payment";
-import styles from "./checkout.module.css";
+import styles from "./Checkout.module.css";
 import { generateClientToken } from "@/lib/api/braintree";
 import dropin from "braintree-web-drop-in";
 import { toast } from "react-toastify";
