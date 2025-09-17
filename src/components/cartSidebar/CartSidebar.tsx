@@ -4,6 +4,7 @@ import { useCart } from "@/context/useCart";
 import { X } from "lucide-react";
 import styles from "./CartSidebar.module.css";
 import { useRouter, usePathname, useSearchParams } from "next/navigation";
+import { useEffect, useState } from "react";
 
 export default function CartSidebar() {
   const { cart, removeFromCart, isSidebarOpen, closeSidebar, clearCart } =
@@ -12,27 +13,41 @@ export default function CartSidebar() {
   const pathname = usePathname();
   const searchParams = useSearchParams();
 
+  const [total, setTotal] = useState<number>(0);
+
+  const removeTickets = () => {
+    const query = new URLSearchParams(Array.from(searchParams.entries()));
+    query.delete("tickets");
+    router.replace(`${pathname}?${query.toString()}`);
+  };
+
   const handleRemove = (raffleId: number) => {
     removeFromCart(raffleId);
 
-    // Limpiar tickets en params si estamos en la página de esa rifa
     const currentRaffleId = Number(pathname.split("/")[2]);
     if (currentRaffleId === raffleId) {
-      const query = new URLSearchParams(Array.from(searchParams.entries()));
-      query.delete("tickets");
-      router.replace(`${pathname}?${query.toString()}`);
+      removeTickets();
     }
   };
 
   const handleClearCart = () => {
     clearCart();
+
+    removeTickets();
   };
 
   const handleCheckout = () => {
-    // Aquí redirigimos a la futura pasarela de pago
     router.push("/checkout");
     closeSidebar();
   };
+
+  useEffect(() => {
+    const newTotal = cart.reduce((acc, item) => {
+      return acc + (item.price ?? 0) * item.tickets.length;
+    }, 0);
+
+    setTotal(newTotal);
+  }, [cart]);
 
   return (
     <>
@@ -64,13 +79,21 @@ export default function CartSidebar() {
               <div key={item.raffleId} className={styles.item}>
                 <img
                   src={item.productImage}
-                  alt={item.raffleTitle}
+                  alt={item.title}
                   className={styles.image}
                 />
                 <div className={styles.info}>
-                  <h3 className={styles.title}>{item.raffleTitle}</h3>
+                  <h3 className={styles.title}>{item.title}</h3>
                   <p className={styles.tickets}>
-                    {item.tickets.length} ticket(s) seleccionados
+                    {item.price} USD x {item.tickets.length} ticket(s)
+                    seleccionados
+                  </p>
+                  <p className={styles.tickets}>
+                    Subtotal:
+                    <strong>
+                      {" "}
+                      {(item.price ?? 0) * item.tickets.length} USD
+                    </strong>
                   </p>
                   <div className={styles.actions}>
                     <button
@@ -101,10 +124,13 @@ export default function CartSidebar() {
           )}
         </div>
         {cart.length > 0 && (
-          <div className={styles.footer}>
-            <button className={styles.checkoutBtn} onClick={handleCheckout}>
-              Comprar
-            </button>
+          <div className={styles.footerContainer}>
+            <p className={styles.title}>Total a pagar: {total} USD</p>
+            <div className={styles.footer}>
+              <button className={styles.checkoutBtn} onClick={handleCheckout}>
+                Comprar
+              </button>
+            </div>
           </div>
         )}
       </div>

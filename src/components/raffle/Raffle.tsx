@@ -6,6 +6,7 @@ import styles from "./Raffle.module.css";
 import { MyRaffle } from "@/types/raffle";
 import { useCart } from "@/context/useCart";
 import { useMemo } from "react";
+import { formatDateTime } from "@/utils/formatDate";
 
 export interface RaffleProps {
   raffle: MyRaffle;
@@ -32,16 +33,6 @@ export default function Raffle({
 
   const endDate = new Date(raffle.endDate || "");
   const today = new Date();
-  const formattedDateTime = endDate.toLocaleString("en-GB", {
-    day: "2-digit",
-    month: "2-digit",
-    year: "numeric",
-    hour: "2-digit",
-    minute: "2-digit",
-    hour12: true,
-  });
-
-  // ejemplo → "02/09/2025, 12:45 AM"
 
   return (
     <article
@@ -64,7 +55,7 @@ export default function Raffle({
 
         <div className={styles.size}>
           <h3 className={styles.date}>Fecha de sorteo:</h3>
-          <p className={styles.hour}>{formattedDateTime}</p>
+          <p className={styles.hour}>{formatDateTime(raffle.endDate)}</p>
         </div>
 
         <div className={styles.color}>

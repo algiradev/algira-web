@@ -1,0 +1,68 @@
+.wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: transparent;
+}
+
+.card {
+  background-color: var(--foreground);
+  color: var(--background);
+  border-radius: 16px;
+  padding: 40px 30px;
+  max-width: 400px;
+  width: 90%;
+  text-align: center;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+  animation: fadeIn 0.8s ease-out;
+}
+
+.checkmark {
+  font-size: 4rem;
+  color: var(--secundary-color);
+  margin-bottom: 20px;
+  animation: pop 0.5s ease-out;
+}
+
+.title {
+  font-size: 1.8rem;
+  margin-bottom: 15px;
+  color: var(--primary-color);
+}
+
+.subtitle {
+  font-size: 1.1rem;
+  margin-bottom: 10px;
+  color: var(--background);
+}
+
+.redirect {
+  font-size: 0.95rem;
+  color: var(--background);
+  margin-top: 15px;
+}
+
+/* Animaciones */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateZ(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateZ(0);
+  }
+}
+
+@keyframes pop {
+  0% {
+    transform: scale(0);
+  }
+  70% {
+    transform: scale(1.2);
+  }
+  100% {
+    transform: scale(1);
+  }
+}

@@ -11,7 +11,7 @@ import { MyTicket } from "@/types/ticket";
 
 export type CartItem = {
   raffleId: number;
-  raffleTitle: string;
+  title: string;
   productImage: string;
   tickets: MyTicket[];
   price?: number;
@@ -53,7 +53,12 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
       if (existing) {
         return prev.map((c) =>
           c.raffleId === item.raffleId
-            ? { ...c, tickets: item.tickets, price: item.price ?? 0 }
+            ? {
+                ...c,
+                tickets: item.tickets,
+                price: item.price ?? 0,
+                raffleTitle: item.title,
+              }
             : c
         );
       }

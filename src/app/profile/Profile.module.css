@@ -333,3 +333,81 @@
   opacity: 0.6;
   cursor: not-allowed;
 }
+
+.profile__purchaseHistory {
+  margin-top: 30px;
+  width: 100%;
+}
+
+.profile__purchaseHistory h3 {
+  margin-bottom: 10px;
+  color: var(--primary-color);
+}
+
+.invoiceCard {
+  background-color: #f9f9f9;
+  padding: 15px;
+  margin-bottom: 20px;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.invoiceCard p {
+  color: var(--primary-color);
+}
+
+.invoiceInfo {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.invoiceInfo .left p {
+  margin-bottom: 0.5rem;
+}
+
+.purchaseTable {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+}
+
+.purchaseTable th,
+.purchaseTable td {
+  border: 1px solid #ccc;
+  padding: 6px 8px;
+  text-align: center;
+}
+
+.purchaseTable th {
+  background-color: var(--secundary-color);
+  color: #fff;
+}
+
+.purchaseTable tbody td {
+  color: black;
+}
+
+.profile__purchaseHistoryWrapper {
+  margin-top: 1rem;
+  max-height: 600px; /* ajusta según necesites */
+  overflow-y: auto;
+  padding-right: 1rem; /* evita que se sobreponga el scroll */
+  width: 90%;
+}
+
+/* Para WebKit (Chrome, Edge, Safari) */
+.profile__purchaseHistoryWrapper::-webkit-scrollbar {
+  width: 10px; /* grosor del scroll */
+}
+
+.profile__purchaseHistoryWrapper::-webkit-scrollbar-thumb {
+  background-color: var(--secundary-color); /* color del thumb */
+  border-radius: 10px;
+}
+
+/* Para Firefox */
+.profile__purchaseHistoryWrapper {
+  scrollbar-width: thin;
+  scrollbar-color: var(--secundary-color) #f0f0f0; /* thumb track */
+}

@@ -26,8 +26,8 @@ export default function TicketsClient({ raffle }: TicketsClientProps) {
 
   const preselectedTicketsParam = searchParams.get("tickets");
   const preselectedTickets: Ticket[] = preselectedTicketsParam
-    ? preselectedTicketsParam.split(",").map((num, i) => ({
-        id: String(i + 1),
+    ? preselectedTicketsParam.split(",").map((num) => ({
+        id: Number(1),
         number: Number(num),
       }))
     : [];
@@ -38,14 +38,10 @@ export default function TicketsClient({ raffle }: TicketsClientProps) {
   const tickets: Ticket[] = Array.from(
     { length: raffle.maxQuantity ?? 0 },
     (_, i) => ({
-      id: String(i + 1),
+      id: i + 1,
       number: i + 1,
     })
   );
-
-  // 2. Filtramos los no disponibles según raffle.tickets
-
-  // ...
 
   const unavailable: Ticket[] = useMemo(() => {
     const takenSet = new Set<number>([
@@ -58,8 +54,11 @@ export default function TicketsClient({ raffle }: TicketsClientProps) {
     ]);
 
     return tickets
-      .filter((t) => takenSet.has(t.number))
-      .map((t) => ({ id: String(t.id), number: t.number }));
+      .filter((t) => takenSet.has(t.number ?? 0))
+      .map((t) => ({
+        id: t.id, // ✅ number (ya no String)
+        number: t.number,
+      }));
   }, [raffle.tickets, takenTickets, tickets]);
 
   // manejar selección y actualizar query params
@@ -67,7 +66,7 @@ export default function TicketsClient({ raffle }: TicketsClientProps) {
     const num = parseInt(e.target.value);
     let newSelected: Ticket[];
     if (e.target.checked) {
-      newSelected = [...selected, { id: e.target.id, number: num }];
+      newSelected = [...selected, { id: parseInt(e.target.id), number: num }];
     } else {
       newSelected = selected.filter((t) => t.number !== num);
     }
@@ -89,6 +88,15 @@ export default function TicketsClient({ raffle }: TicketsClientProps) {
     id: raffle.id ?? 0,
     endDate: raffle.endDate ?? new Date().toISOString(),
     price: raffle.price ?? 0,
+    title: raffle.title ?? "",
+    tickets:
+      raffle.tickets?.map((t) => ({
+        id: t.id,
+        number: t.number,
+        code: t.code ?? "",
+        raffle: t.raffle ?? null,
+        status_ticket: t.status_ticket,
+      })) ?? [],
     quantityAvailable: raffle.maxQuantity ?? 0,
     product: {
       id: raffle.product?.id ?? 0,
@@ -106,7 +114,7 @@ export default function TicketsClient({ raffle }: TicketsClientProps) {
     const ticketsParam = searchParams.get("tickets");
     const updatedSelected: Ticket[] = ticketsParam
       ? ticketsParam.split(",").map((num, i) => ({
-          id: String(i + 1),
+          id: i + 1,
           number: Number(num),
         }))
       : [];

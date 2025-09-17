@@ -5,7 +5,6 @@ import type { Dropin } from "braintree-web-drop-in";
 import { useCart } from "@/context/useCart";
 import { useAuth } from "@/context/AuthContext";
 import { useRouter } from "next/navigation";
-import type { PaymentResponse } from "@/types/payment";
 import styles from "./Checkout.module.css";
 import { generateClientToken, processPayment } from "@/lib/api/braintree";
 import dropin from "braintree-web-drop-in";
@@ -18,7 +17,7 @@ export default function CheckoutPage() {
 
   const [clientToken, setClientToken] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
-  const [orderResult, setOrderResult] = useState<PaymentResponse | null>(null);
+  const [orderResult, setOrderResult] = useState<boolean>(false);
 
   const dropinContainerRef = useRef<HTMLDivElement>(null);
   const dropinInstance = useRef<Dropin | null | undefined>(undefined);
@@ -77,10 +76,10 @@ export default function CheckoutPage() {
   }, [clientToken]);
 
   useEffect(() => {
-    if (cart.length === 0) {
+    if (cart.length === 0 && !orderResult) {
       router.push("/");
     }
-  }, [cart, router]);
+  }, [cart, router, orderResult]);
 
   const handleBuy = async () => {
     if (!dropinInstance.current) return;
@@ -108,8 +107,10 @@ export default function CheckoutPage() {
       });
 
       if (data.success) {
-        clearCart();
+        router.push("/thank-you");
+        setOrderResult(true);
         toast.success("Pago procesado correctamente ✅");
+        clearCart();
       } else {
         toast.error("Error: " + data.error);
       }
@@ -132,8 +133,14 @@ export default function CheckoutPage() {
         ) : (
           cart.map((item) => (
             <div key={item.raffleId} className={styles.cartItem}>
-              <h3>{item.raffleTitle}</h3>
-              <p>Tickets: {item.tickets.map((t) => t.number).join(", ")}</p>
+              <h3>{item.title}</h3>
+              <p>
+                Tickets:{" "}
+                {item.tickets
+                  .map((t) => t.number ?? 0)
+                  .sort((a, b) => a - b)
+                  .join(", ")}
+              </p>
               <p>
                 {item.tickets.length} x ${item.price} ={" "}
                 <strong>
@@ -157,21 +164,6 @@ export default function CheckoutPage() {
       <button onClick={handleBuy} className={styles.payButton}>
         {loading ? "Procesando..." : "Pagar ahora"}
       </button>
-
-      {/* Resultado de la orden */}
-      {orderResult && (
-        <div className={styles.orderResult}>
-          {orderResult.success ? (
-            <>
-              <h3>Pago exitoso 🎉</h3>
-              <p>Transacción: {orderResult.order?.transactionId}</p>
-              <p>Monto: ${orderResult.order?.amount.toFixed(2)}</p>
-            </>
-          ) : (
-            <p className={styles.error}>Error: {orderResult.error}</p>
-          )}
-        </div>
-      )}
     </div>
   );
 }
