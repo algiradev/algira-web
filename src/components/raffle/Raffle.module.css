@@ -1,0 +1,212 @@
+.article {
+  position: relative;
+  width: 320px;
+  height: 450px;
+  color: black;
+  background: white;
+  border-radius: 20px;
+  overflow: hidden;
+  margin: 2rem;
+  transition: 0.3s;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+}
+
+.article:hover {
+  box-shadow: 0 15px 25px rgba(0, 0, 0, 0.25);
+  transform: translateY(-5px);
+}
+
+.article.unavailable {
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+.imgBox {
+  position: absolute;
+  top: 20%;
+  transform: translateY(-50%);
+  z-index: 500;
+  width: 100%;
+  height: 220px;
+  transition: 0.5s;
+  overflow: hidden;
+}
+
+.imgBox:hover {
+  transform: translateY(-50%) scale(1.15);
+}
+
+.img {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100%;
+  transform: translate(-50%, -50%) rotate(-5deg);
+  max-width: 270px;
+  background-color: transparent;
+}
+
+.contentBox {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 210px;
+  text-align: center;
+  transition: 1s;
+  z-index: 10;
+  padding: 1rem 0;
+  background: rgba(255, 255, 255, 0);
+  box-sizing: border-box;
+}
+
+.title {
+  position: relative;
+  font-weight: 600;
+  letter-spacing: 1px;
+  color: var(--color-text-dark);
+  margin-bottom: 0.5rem;
+  font-size: 1.2rem;
+  padding: 0 10px;
+}
+
+.size,
+.color,
+.button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 0.3rem;
+  padding: 5px 3px;
+  opacity: 1;
+  visibility: visible;
+}
+
+.size {
+  margin-bottom: 0.5rem;
+}
+
+.color {
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.size h3,
+.color h3 {
+  color: black;
+  font-weight: 400;
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.color p {
+  font-weight: bold;
+  font-size: 14px;
+  margin-top: -2px;
+}
+
+.size span {
+  width: 26px;
+  height: 26px;
+  text-align: center;
+  line-height: 26px;
+  font-size: 14px;
+  display: inline-block;
+  color: #003748;
+  background: #cdeded;
+  margin: 0 3px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.size span:hover {
+  color: #cdeded;
+  background: #003748;
+}
+
+.size .date {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+  color: var(--color-text-dark);
+  font-weight: 400;
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  gap: 5px;
+  margin: 0 auto;
+}
+
+.size .hour {
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.button {
+  background-color: #00897d;
+  color: white;
+  margin: 0 auto;
+  width: 50%;
+  padding: 8px 16px;
+  border-radius: 50px;
+  font-weight: bold;
+  cursor: pointer;
+  text-decoration: none;
+  transition: 0.3s;
+}
+
+.button:hover {
+  scale: 1.05;
+  background-color: #00695c;
+}
+
+.button.disabled {
+  background: #00695c;
+  color: white;
+}
+
+.outOfStock {
+  display: inline-block;
+  margin: 0 auto;
+
+  text-decoration: none;
+  background: #ccc;
+  color: #333;
+  border-radius: 0.9rem;
+  border: none;
+  font-weight: 600;
+  max-width: 120px;
+  min-width: max-content;
+  padding: 10px 20px;
+  transition: 0.3s;
+  cursor: default;
+}
+
+.article::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #00897d;
+  clip-path: circle(300px at 80% -20%);
+  transition: 0.5s ease-in-out;
+}
+
+.article::after {
+  content: "Rifa";
+  position: absolute;
+  top: 30%;
+  left: -3%;
+  font-weight: 800;
+  font-size: 12em;
+  font-style: italic;
+  color: rgba(0, 0, 0, 0.11);
+  pointer-events: none;
+}

@@ -1,0 +1,80 @@
+/* Contenedor del componente ZoomableImage */
+.container {
+  width: 100%; /* Hereda el ancho del raffleFigure (100px) */
+  height: 100%; /* Hereda el alto del raffleFigure (200px) */
+  position: relative;
+}
+
+/* Contenedor de la imagen original */
+.imageWrapper {
+  width: 100%; /* 100px desde raffleFigure */
+  height: 100%; /* 200px desde raffleFigure */
+  position: relative; /* Necesario para next/image con fill */
+  overflow: hidden; /* Evita desbordamiento */
+  cursor: pointer;
+}
+
+/* Imagen original */
+.productImage {
+  width: 100%;
+  height: 100%;
+  object-fit: contain; /* Mantiene proporción */
+}
+
+/* Contenedor de la imagen ampliada */
+.zoomContainer {
+  position: absolute;
+  left: 103%; /* 100px (ancho de raffleFigure) + 10px de margen */
+  top: -83px;
+  width: 500px; /* Tamaño de la imagen ampliada */
+  height: 650px; /* El doble del alto para zoom claro */
+  border: 1px solid #ddd;
+  background: #fff;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  z-index: 1000;
+}
+
+.productImage {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+.lens {
+  position: absolute;
+  border: 2px solid rgba(0, 0, 0, 0.25);
+  background: rgba(255, 255, 255, 0.12);
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.02) inset;
+  pointer-events: none;
+  backdrop-filter: blur(1px);
+}
+
+.zoomedImage {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: auto; /* se sobrescribe por style */
+  height: auto;
+}
+
+/* Ajustes para móviles */
+@media (max-width: 768px) {
+  .container {
+    width: 100%;
+    height: 100%;
+  }
+
+  .imageWrapper {
+    width: 100%;
+    height: 100%;
+    aspect-ratio: 1 / 2; /* Mantiene proporción 100x200px */
+  }
+
+  .zoomContainer {
+    display: none; /* Desactiva el zoom en móviles */
+  }
+}

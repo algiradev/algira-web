@@ -1,0 +1,16 @@
+.form__container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: linear-gradient(
+    -27deg,
+    var(--secundary-color) 50%,
+    var(--primary-color) 50%
+  );
+}
+
+.mainContent {
+  margin-top: 2rem;
+  width: 100%;
+}
