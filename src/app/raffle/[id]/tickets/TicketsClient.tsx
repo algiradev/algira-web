@@ -61,6 +61,11 @@ export default function TicketsClient({ raffle }: TicketsClientProps) {
       }));
   }, [raffle.tickets, takenTickets, tickets]);
 
+  const availableTickets: Ticket[] = useMemo(() => {
+    const takenSet = new Set<number>(unavailable.map((t) => t.number ?? 0));
+    return tickets.filter((t) => !takenSet.has(t.number ?? 0));
+  }, [tickets, unavailable]);
+
   // manejar selección y actualizar query params
   const handledChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const num = parseInt(e.target.value);
@@ -97,7 +102,7 @@ export default function TicketsClient({ raffle }: TicketsClientProps) {
         raffle: t.raffle ?? null,
         status_ticket: t.status_ticket,
       })) ?? [],
-    quantityAvailable: raffle.maxQuantity ?? 0,
+    availableAmount: availableTickets.length,
     product: {
       id: raffle.product?.id ?? 0,
       title: raffle.product?.title ?? "",
@@ -133,11 +138,7 @@ export default function TicketsClient({ raffle }: TicketsClientProps) {
       }
     };
 
-    fetchTakenTickets(); // primera llamada inmediata
-
-    const interval = setInterval(fetchTakenTickets, 5000); // cada 5 segundos
-
-    return () => clearInterval(interval); // limpiar al desmontar
+    fetchTakenTickets();
   }, [raffle.id]);
 
   return (

@@ -33,7 +33,7 @@ const RaffleDetail = ({ raffle }: Props) => {
 
   const { cart } = useCart();
 
-  const quantityAvailable = raffle.maxQuantity ?? 0;
+  const quantityAvailable = raffle.availableAmount ?? 0;
 
   const today = new Date();
   const endDate = new Date(raffle.endDate ?? "");

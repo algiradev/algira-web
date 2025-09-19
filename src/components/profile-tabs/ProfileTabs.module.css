@@ -1,0 +1,93 @@
+.profileTabs {
+  width: 95%;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 5px 25px rgba(0, 0, 0, 0.1);
+  padding: 1rem;
+}
+
+.tabs {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.tabs button {
+  padding: 0.5rem 1rem;
+  border: none;
+  background: #ffffff;
+  border-radius: 8px;
+  border: 1px solid var(--secundary-color);
+  color: var(--secundary-color);
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.tabs button.active {
+  background: var(--secundary-color);
+  color: #fff;
+}
+
+.tabContent {
+  width: 100%;
+}
+
+.scrollWrapper {
+  max-height: 400px;
+  overflow-y: auto;
+  padding-right: 0.5rem;
+  color: var(--background);
+}
+
+/* Scroll */
+.scrollWrapper::-webkit-scrollbar {
+  width: 8px;
+}
+
+.scrollWrapper::-webkit-scrollbar-thumb {
+  background-color: var(--secundary-color);
+  border-radius: 8px;
+}
+
+.scrollWrapper {
+  scrollbar-width: thin;
+  scrollbar-color: var(--secundary-color) #f0f0f0;
+}
+
+.invoiceCard,
+.raffleCard {
+  background: #f9f9f9;
+  padding: 12px;
+  margin-bottom: 12px;
+  border-radius: 8px;
+  color: var(--background);
+}
+
+.invoiceInfo {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 8px;
+  color: var(--background);
+}
+
+.purchaseTable {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 6px;
+}
+
+.purchaseTable th,
+.purchaseTable td {
+  border: 1px solid #ccc;
+  padding: 6px 8px;
+  text-align: center;
+}
+
+.purchaseTable th {
+  background-color: var(--secundary-color);
+  color: #fff;
+}
+
+.purchaseTable tbody td {
+  color: black;
+}
