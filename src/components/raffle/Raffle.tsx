@@ -81,7 +81,7 @@ export default function Raffle({
           >
             Finalizado
           </Link>
-        ) : isSale && (raffle.quantityAvailable || 0) > 0 && !hideBuyButton ? (
+        ) : isSale && (raffle.availableAmount || 0) > 0 && !hideBuyButton ? (
           <Link
             href={`/raffle/${raffle.id}/tickets${
               ticketsInCart ? `?tickets=${ticketsInCart}` : ""
@@ -92,7 +92,7 @@ export default function Raffle({
           </Link>
         ) : (
           isSale &&
-          (raffle.quantityAvailable || 0) <= 0 && (
+          (raffle.availableAmount || 0) <= 0 && (
             <p className={styles.outOfStock}>Agotado</p>
           )
         )}

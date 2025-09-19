@@ -8,7 +8,7 @@ export type MyRaffle = {
   endDate?: string;
   price: number;
   maxQuantity?: number;
-  quantityAvailable: number;
+  availableAmount?: number;
   product: MyProduct;
   tickets?: MyTicket[];
 };

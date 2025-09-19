@@ -8,6 +8,7 @@ import Navbar from "../components/navbar/Navbar";
 import { AuthProvider } from "@/context/AuthContext";
 import { CartProvider } from "@/context/useCart";
 import NavbarWithCart from "@/components/navbar/NavbarWithCart";
+import { SocketProvider } from "@/providers/SocketProvider";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -37,12 +38,14 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} ${styles.form__container}`}
       >
-        <AuthProvider>
-          <CartProvider>
-            <NavbarWithCart />
-            <main className={styles.mainContent}>{children}</main>
-          </CartProvider>
-        </AuthProvider>
+        <SocketProvider>
+          <AuthProvider>
+            <CartProvider>
+              <NavbarWithCart />
+              <main className={styles.mainContent}>{children}</main>
+            </CartProvider>
+          </AuthProvider>
+        </SocketProvider>
         <ToastContainer
           position="bottom-left"
           autoClose={4000}

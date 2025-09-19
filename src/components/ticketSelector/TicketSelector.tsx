@@ -6,6 +6,9 @@ import styles from "./TicketSelector.module.css";
 import Button from "../button/Button";
 import { useCart } from "@/context/useCart";
 import { MyRaffle } from "@/types/raffle";
+import { useSocket } from "@/providers/SocketProvider";
+import { useEffect, useState } from "react";
+import { toast } from "react-toastify";
 
 export interface Ticket {
   id: number;
@@ -29,9 +32,64 @@ export default function TicketSelector({
   handledChange,
 }: TicketSelectorProps) {
   const { addToCart, openSidebar } = useCart();
+  const [user, setUser] = useState<{ id: number } | null>(null);
+  const { socket } = useSocket(); // asumimos que user está en el provider de socket
+  const [unavailable, setUnavailable] = useState<Ticket[]>(unavailableTickets);
+  const [selected, setSelected] = useState<Ticket[]>(selectedTickets);
+
+  useEffect(() => {
+    const storedUser = localStorage.getItem("user");
+    if (storedUser) setUser(JSON.parse(storedUser));
+  }, []);
+
+  // Mantener actualizado el estado de unavailable desde props
+  useEffect(() => {
+    setUnavailable(unavailableTickets);
+  }, [unavailableTickets]);
+
+  // Mantener seleccionado en sync con props
+  useEffect(() => {
+    setSelected(selectedTickets);
+  }, [selectedTickets]);
+
+  // Suscribirse a actualizaciones del socket
+  useEffect(() => {
+    if (!socket) return;
+
+    const handleRaffleUpdate = (data: {
+      raffleId: number;
+      ticketsBought: number[];
+      buyerId: number;
+    }) => {
+      const { raffleId, ticketsBought, buyerId } = data;
+      if (raffleId !== raffle.id) return;
+      if (!user) return;
+
+      // Solo afecta a otros usuarios, no al que compró
+      if (buyerId !== user.id) {
+        // Marcar tickets comprados como no disponibles
+        setUnavailable((prev) => [
+          ...prev,
+          ...ticketsBought
+            .filter((num) => !prev.some((t) => t.number === num))
+            .map((num) => ({ id: num, number: num })),
+        ]);
+
+        // Desmarcar tickets seleccionados que fueron comprados por otros
+        setSelected((prev) =>
+          prev.filter((t) => !ticketsBought.includes(t.number ?? -1))
+        );
+      }
+    };
+
+    socket.on("raffle:update", handleRaffleUpdate);
+    return () => {
+      socket.off("raffle:update", handleRaffleUpdate);
+    };
+  }, [socket, raffle.id, user]);
 
   // Ordenamos los tickets deshabilitados
-  const sortedUnavailable = [...unavailableTickets].sort(
+  const sortedUnavailable = [...unavailable].sort(
     (a, b) => (a.number ?? 0) - (b.number ?? 0)
   );
 
@@ -42,9 +100,7 @@ export default function TicketSelector({
     }
 
     return options.map((opt) => {
-      const isSelected = !!selectedTickets.find(
-        (st) => st.number === opt.number
-      );
+      const isSelected = !!selected.find((st) => st.number === opt.number);
       const isUnavailable = !!sortedUnavailable.find(
         (t) => t.number === opt.number
       );
@@ -93,29 +149,26 @@ export default function TicketSelector({
       <div className={styles.buttonWrapper}>
         <Button
           className={styles.nextButton}
-          disabled={selectedTickets.length === 0}
+          disabled={selected.length === 0}
           onClick={() => {
             addToCart({
               raffleId: raffle.id ?? 0,
               title: raffle.title ?? "",
               productImage: raffle.product.image?.[0] ?? "",
               price: raffle.price ?? 0,
-              tickets: selectedTickets.map((ticket) => ({
+              tickets: selected.map((ticket) => ({
                 id: ticket.id,
                 code: String(ticket.number),
                 number: ticket.number,
               })),
             });
             openSidebar();
-            console.log("title", raffle.title);
           }}
         >
-          {selectedTickets.length === 0
+          {selected.length === 0
             ? "Seleccione un ticket"
             : "Agregar al carrito"}
-          {selectedTickets.length > 0 && (
-            <HiArrowSmRight className={styles.icon} />
-          )}
+          {selected.length > 0 && <HiArrowSmRight className={styles.icon} />}
         </Button>
       </div>
     </div>

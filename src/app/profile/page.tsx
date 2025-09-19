@@ -24,6 +24,8 @@ import { useCart } from "@/context/useCart";
 import { MyInvoice } from "@/types/invoice";
 import { getUserInvoices } from "@/lib/api/invoice";
 import { formatDateTime } from "@/utils/formatDate";
+import { isTokenExpired } from "@/utils/jwt";
+import ProfileTabs from "@/components/profile-tabs/ProfileTabs";
 
 export default function Profile() {
   const inputImage = useRef<HTMLInputElement>(null);
@@ -81,7 +83,7 @@ export default function Profile() {
         const accessToken = localStorage.getItem("accessToken");
         const userData = localStorage.getItem("user");
         if (!accessToken || !userData) {
-          toast.error("No estás autenticado. Por favor, inicia sesión.");
+          clearCart();
           router.push("/login");
           return;
         }
@@ -153,12 +155,16 @@ export default function Profile() {
   useEffect(() => {
     const fetchInvoices = async () => {
       const token = localStorage.getItem("accessToken");
-      if (!token) return;
+      if (!token || isTokenExpired(token)) {
+        toast.info("Tu sesión expiró, vuelve a iniciar sesión.");
+        logout();
+        return;
+      }
 
       try {
         const data = await getUserInvoices(token);
         setInvoices(data);
-      } catch (err) {
+      } catch (err: unknown) {
         console.error("Error al cargar historial de compras:", err);
       }
     };
@@ -217,90 +223,7 @@ export default function Profile() {
             </div>
           </header>
 
-          <h3>Historial de compras</h3>
-          <div className={styles.profile__purchaseHistoryWrapper}>
-            {invoices.length === 0 ? (
-              <p>No has comprado tickets aún.</p>
-            ) : (
-              invoices.map((invoice) => {
-                // Agrupar tickets por rifa
-                const ticketsByRaffle = invoice.tickets.reduce(
-                  (acc, ticket) => {
-                    if (!ticket.raffle) return acc;
-                    if (!acc[ticket.raffle.id]) acc[ticket.raffle.id] = [];
-                    acc[ticket.raffle.id].push(ticket);
-                    return acc;
-                  },
-                  {} as Record<number, typeof invoice.tickets>
-                );
-
-                return (
-                  <div key={invoice.id} className={styles.invoiceCard}>
-                    <div className={styles.invoiceInfo}>
-                      <div className={styles.left}>
-                        <p>
-                          <strong>Fecha:</strong>{" "}
-                          {new Date(
-                            invoice.transactionDate
-                          ).toLocaleDateString()}
-                        </p>
-                        <p>
-                          <strong>Total:</strong> ${invoice.total.toFixed(2)}
-                        </p>
-                      </div>
-
-                      <div className={styles.right}>
-                        <p>
-                          <strong>Código del invoice:</strong>{" "}
-                          {invoice.transactionId}
-                        </p>
-                      </div>
-                    </div>
-                    <div className={styles.purchaseTableWrapper}>
-                      <table className={styles.purchaseTable}>
-                        <thead>
-                          <tr>
-                            <th>Rifa</th>
-                            <th>Precio por ticket</th>
-                            <th>Tickets</th>
-                            <th>Fecha sorteo</th>
-                            <th>Subtotal</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          {Object.entries(ticketsByRaffle).map(
-                            ([raffleId, tickets]) => (
-                              <tr key={raffleId}>
-                                <td>{tickets[0].raffle?.title}</td>
-                                <td>${tickets[0].raffle?.price.toFixed(2)}</td>
-                                <td>
-                                  {tickets
-                                    .map((t) => t.number ?? 0)
-                                    .sort((a, b) => a - b)
-                                    .join(", ")}
-                                </td>
-                                <td>
-                                  {formatDateTime(
-                                    tickets[0].raffle?.endDate ?? ""
-                                  )}
-                                </td>
-
-                                <td>
-                                  $
-                                  {(tickets[0].raffle?.price ?? 0) *
-                                    tickets.length}
-                                </td>
-                              </tr>
-                            )
-                          )}
-                        </tbody>
-                      </table>
-                    </div>
-                  </div>
-                );
-              })
-            )}
-          </div>
+          <ProfileTabs invoices={invoices} />
         </div>
         <div className={styles.profile__myaccount}>
           <h2>Mi perfil</h2>
