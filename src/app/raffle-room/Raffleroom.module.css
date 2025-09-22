@@ -90,6 +90,7 @@
   justify-content: center;
   gap: 2rem;
   padding: 2rem;
+  margin-top: 2rem;
 }
 
 .noRaffles {
@@ -97,4 +98,24 @@
   font-size: 1.2rem;
   color: white;
   margin-top: 2rem;
+}
+
+.contactSection {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: stretch;
+  width: 80%;
+  margin: 0 auto;
+  margin-top: 4rem;
+  padding-top: 2rem;
+}
+
+.contactSection > form {
+  flex: 1 1 450px; /* flex-grow, flex-shrink, flex-basis */
+  max-width: 500px; /* ancho máximo igual para ambos */
+  min-height: 500px; /* 🔹 altura mínima igual */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; /* los botones siempre abajo */
 }

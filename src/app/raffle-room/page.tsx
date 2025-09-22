@@ -6,8 +6,9 @@ import Loader from "../../components/loader/Loader";
 import { MyRaffle } from "../../types/raffle";
 import styles from "./Raffleroom.module.css";
 import Raffle from "@/components/raffle/Raffle";
-import { io } from "socket.io-client";
 import { useSocket } from "@/providers/SocketProvider";
+import ContactFeedbackForm from "@/components/contact-form/ContactForm";
+import FeedbackForm from "@/components/feedback-form/FeedbackForm";
 
 const STRAPI_URL =
   process.env.NEXT_PUBLIC_STRAPI_URL || "http://localhost:1337";
@@ -63,35 +64,41 @@ const RaffleRoom = () => {
     return <p className={styles.noRaffles}>No hay rifas disponibles</p>;
 
   return (
-    <div className={styles.raffleRoom}>
-      {raffles.map((raffle) => {
-        const formattedRaffle = {
-          id: raffle.id ?? 0,
-          endDate: raffle.endDate ?? new Date().toISOString(),
-          price: raffle.price ?? 0,
-          availableAmount: raffle.availableAmount ?? 0,
-          product: {
-            id: raffle.product?.id ?? 0,
-            title: raffle.product?.title ?? "",
-            shortDescription: raffle.product?.shortDescription ?? "",
-            description: raffle.product?.description ?? "",
-            image:
-              raffle.product?.image?.map((img: string) =>
-                img.startsWith("http") ? img : STRAPI_URL + img
-              ) ?? [],
-          },
-        };
+    <>
+      <div className={styles.raffleRoom}>
+        {raffles.map((raffle) => {
+          const formattedRaffle = {
+            id: raffle.id ?? 0,
+            endDate: raffle.endDate ?? new Date().toISOString(),
+            price: raffle.price ?? 0,
+            availableAmount: raffle.availableAmount ?? 0,
+            product: {
+              id: raffle.product?.id ?? 0,
+              title: raffle.product?.title ?? "",
+              shortDescription: raffle.product?.shortDescription ?? "",
+              description: raffle.product?.description ?? "",
+              image:
+                raffle.product?.image?.map((img: string) =>
+                  img.startsWith("http") ? img : STRAPI_URL + img
+                ) ?? [],
+            },
+          };
 
-        return (
-          <Raffle
-            key={raffle.id ?? Math.random()}
-            raffle={formattedRaffle}
-            isSale={true}
-            user={!!user}
-          />
-        );
-      })}
-    </div>
+          return (
+            <Raffle
+              key={raffle.id ?? Math.random()}
+              raffle={formattedRaffle}
+              isSale={true}
+              user={!!user}
+            />
+          );
+        })}
+      </div>
+      <div className={styles.contactSection}>
+        <FeedbackForm />
+        <ContactFeedbackForm />
+      </div>
+    </>
   );
 };
 
