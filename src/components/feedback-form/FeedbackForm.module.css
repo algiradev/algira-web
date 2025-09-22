@@ -1,0 +1,107 @@
+.form {
+  max-width: 500px;
+  margin: 2rem auto;
+  padding: 2rem;
+  /* background: linear-gradient(145deg, #e0f7f9, #c2f0f5); */
+  border-radius: 1rem;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+  color: var(--background);
+  font-family: "Arial", sans-serif;
+  transition: transform 0.2s;
+}
+
+.form:hover {
+  transform: translateY(-2px);
+}
+
+.title {
+  text-align: center;
+  font-size: 1.8rem;
+  color: white;
+  margin-bottom: 1.5rem;
+  font-weight: bold;
+}
+
+.field {
+  margin-bottom: 1.2rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.label {
+  margin-bottom: 0.4rem;
+  font-weight: 600;
+  color: white;
+}
+
+.input,
+.textarea,
+.inputFile {
+  padding: 0.8rem;
+  border-radius: 0.6rem;
+  border: 1px solid #00796b;
+  font-size: 1rem;
+  background-color: white;
+  color: black;
+
+  transition: border 0.2s, box-shadow 0.2s;
+}
+
+.input:focus,
+.textarea:focus,
+.inputFile:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 8px rgba(0, 137, 125, 0.3);
+}
+
+.textarea {
+  min-height: 120px;
+  resize: vertical;
+}
+
+.inputFile {
+  cursor: pointer;
+  background: white;
+}
+
+.submit {
+  width: 100%;
+  padding: 0.9rem;
+  font-size: 1.1rem;
+  font-weight: bold;
+  color: white;
+  background: var(--primary-color);
+  border: none;
+  border-radius: 0.7rem;
+  cursor: pointer;
+  transition: background 0.3s, transform 0.2s;
+}
+
+.submit:hover {
+  background: var(--secundary-color);
+  transform: translateY(-2px);
+}
+
+.error {
+  color: var(--text-error);
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.success {
+  color: var(--primary-color);
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  .form {
+    padding: 1.5rem;
+  }
+
+  .title {
+    font-size: 1.5rem;
+  }
+}
