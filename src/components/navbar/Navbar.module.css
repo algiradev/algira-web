@@ -200,7 +200,8 @@
 }
 
 .signupButton:hover {
-  background-color: #1f2937;
+  background-color: #cdeded;
+  color: var(--primary-color);
 }
 
 .cartButton {
@@ -224,23 +225,80 @@
   border-radius: 50%;
 }
 
-/* Responsive */
+/* Sidebar lateral oculto */
+.sidebarMenu {
+  position: fixed;
+  top: 0;
+  left: -100%;
+  width: 250px;
+  height: 100%;
+  background-color: var(--secundary-color);
+  color: white;
+  z-index: 5000;
+  display: flex;
+  flex-direction: column;
+  transition: left 0.3s ease;
+  padding: 2rem 1rem;
+}
+
+/* Sidebar abierto */
+.sidebarOpen {
+  left: 0;
+}
+
+/* Header del sidebar con logo y botón cerrar */
+.sidebarHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.closeSidebarButton {
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+/* Contenido del sidebar */
+.sidebarContent {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.sidebarItem {
+  color: white;
+  text-decoration: none;
+  font-weight: 500;
+  padding: 0.5rem 0;
+  transition: all 0.2s;
+}
+
+.sidebarItem:hover {
+  color: var(--primary-color);
+}
+
+.sidebarDivider {
+  border: 0.5px solid rgba(255, 255, 255, 0.3);
+  margin: 1rem 0;
+}
+
+/* Botón hamburguesa solo visible en móvil */
+.hamburgerButton {
+  display: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
 @media (max-width: 768px) {
-  .navbarContainer {
-    flex-direction: column;
-    gap: 1rem;
+  .hamburgerButton {
+    display: block;
   }
 
+  .navbarBrand,
   .navbarContentCenter {
-    order: 3;
-    width: 100%;
-    justify-content: center;
-    flex-wrap: wrap;
-    gap: 0.5rem;
-  }
-
-  .navbarContentEnd {
-    width: 100%;
-    justify-content: center;
+    display: none; /* ocultamos menú horizontal en móvil */
   }
 }

@@ -28,12 +28,13 @@
   width: 70%;
   margin: 0 auto;
   margin-top: 7rem;
+  gap: 1rem;
 }
 
 .profile__header {
   position: relative;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   justify-content: flex-start;
   align-items: flex-start;
   background-color: transparent;
@@ -45,12 +46,16 @@
   padding: 1rem;
 }
 
+.profile__header_text {
+  width: 100%;
+}
+
 .buttons__wrapper {
   width: 100%;
   display: flex;
   justify-content: flex-end;
-  margin-top: -35px;
-  margin-bottom: 15px;
+  margin-top: 0;
+  /* margin-bottom: 15px; */
 }
 
 .profile__section_info {
@@ -410,4 +415,85 @@
 .profile__purchaseHistoryWrapper {
   scrollbar-width: thin;
   scrollbar-color: var(--secundary-color) #f0f0f0; /* thumb track */
+}
+
+@media (max-width: 1480px) {
+  .profile {
+    width: 85%;
+  }
+}
+
+@media (max-width: 1225px) {
+  .profile {
+    width: 90%;
+  }
+}
+
+@media (max-width: 1155px) {
+  .profile__section_info {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 80%;
+  }
+
+  .profile__myaccount,
+  .profile__avatar {
+    width: 80%;
+    max-width: none;
+    animation: none !important;
+  }
+
+  .form {
+    width: 70%;
+  }
+
+  .profile__header {
+    width: 75%;
+  }
+}
+
+@media (max-width: 1000px) {
+  .profile__section_info {
+    width: 90%;
+  }
+}
+
+@media (max-width: 700px) {
+  .profile__section_info {
+    width: 100%;
+  }
+}
+
+@media (max-width: 600px) {
+  .profile__section_info {
+    width: 100%;
+    padding: 0;
+  }
+
+  .profile {
+    width: 100%;
+  }
+}
+
+@media (max-width: 500px) {
+  .profile__header {
+    width: 90%;
+  }
+}
+
+@media (max-width: 400px) {
+  .profile__header {
+    width: 95%;
+    margin-bottom: 1.5rem;
+  }
+
+  .profile {
+    margin-top: 5rem;
+  }
+
+  .profile__avatar,
+  .profile__myaccount {
+    width: 90%;
+  }
 }

@@ -67,10 +67,7 @@
   height: 48px;
   padding: 0 20px;
   border: 1px solid transparent;
-  transition:
-    background 0.2s,
-    color 0.2s,
-    border-color 0.2s;
+  transition: background 0.2s, color 0.2s, border-color 0.2s;
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -163,5 +160,46 @@ a.secondary {
 @media (prefers-color-scheme: dark) {
   .logo {
     filter: invert();
+  }
+}
+
+.contactSection {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: stretch;
+  width: 80%;
+  margin: 0 auto;
+  margin-top: 4rem;
+  padding-top: 2rem;
+}
+
+.contactSection > form {
+  flex: 1 1 450px;
+  max-width: 500px;
+  min-height: 500px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+@media (max-width: 1214px) {
+  .contactSection {
+    flex-direction: column;
+    justify-content: center;
+    width: 100%;
+    margin-top: 0rem;
+    padding-top: 0;
+  }
+
+  .contactSection > form {
+    width: 100%;
+    min-height: auto;
+  }
+}
+
+@media (max-width: 600px) {
+  .contactSection {
+    width: 80%;
   }
 }

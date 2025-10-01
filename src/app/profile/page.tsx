@@ -179,8 +179,14 @@ export default function Profile() {
   return (
     <div className={styles.profile}>
       <section className={styles.profile__header}>
+        <div className={styles.profile__header_text}>
+          <h1>Hola {user.firstName}</h1>
+          <p>
+            Este es tu perfil, donde prodrás ver tu datos, tus tickets
+            comprados, ganados y más.
+          </p>
+        </div>
         <div className={styles.buttons__wrapper}>
-          {/* <BackButton /> */}
           <Button
             onClick={() => {
               logout();
@@ -191,12 +197,6 @@ export default function Profile() {
             Cerrar sesión
           </Button>
         </div>
-        <h1>Hola {user.firstName}</h1>
-        <p>
-          Este es tu perfil, donde prodrás ver tu datos, tus tickets comprados,
-          ganados y más.
-        </p>
-        <br />
       </section>
       <section className={styles.profile__section_info}>
         <div className={styles.profile__avatar}>

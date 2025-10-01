@@ -6,7 +6,7 @@ import styles from "./Navbar.module.css";
 import { usePathname } from "next/navigation";
 import { useAuth } from "@/context/AuthContext";
 import Image from "next/image";
-import { ShoppingCart } from "lucide-react";
+import { Menu, ShoppingCart, X } from "lucide-react";
 import { useCart } from "@/context/useCart";
 
 type User = {
@@ -136,6 +136,10 @@ export default function Navbar({ options = [], onCartToggle }: NavbarProps) {
   const { user, logout } = useAuth();
   const { cartCount, openSidebar, clearCart } = useCart();
 
+  const [menuOpen, setMenuOpen] = useState(false);
+
+  const toggleMenu = () => setMenuOpen(!menuOpen);
+
   const defaultOptions: NavOption[] = [
     { name: "¿Quiénes Somos?", href: "/about-us" },
     { name: "Sala de Sorteos", href: "/raffle-room" },
@@ -160,6 +164,41 @@ export default function Navbar({ options = [], onCartToggle }: NavbarProps) {
 
   return (
     <nav className={styles.navbar}>
+      {/* Menú lateral */}
+      <div
+        className={`${styles.sidebarMenu} ${
+          menuOpen ? styles.sidebarOpen : ""
+        }`}
+      >
+        <div className={styles.sidebarHeader}>
+          <Link href="/" onClick={() => setMenuOpen(false)}>
+            <AlgiraLogo />
+          </Link>
+          <button
+            className={styles.closeSidebarButton}
+            onClick={() => setMenuOpen(false)}
+            aria-label="Cerrar menú"
+          >
+            <X size={24} color="white" />
+          </button>
+        </div>
+
+        <div className={styles.sidebarContent}>
+          {navOptions.map((option) => (
+            <Link
+              key={option.name}
+              href={option.href}
+              className={styles.sidebarItem}
+              onClick={() => setMenuOpen(false)}
+            >
+              {option.name}
+            </Link>
+          ))}
+
+          <hr className={styles.sidebarDivider} />
+        </div>
+      </div>
+
       <div className={styles.navbarContainer}>
         {/* Logo */}
         <div className={styles.navbarBrand}>
@@ -168,8 +207,25 @@ export default function Navbar({ options = [], onCartToggle }: NavbarProps) {
           </Link>
         </div>
 
+        {/* Botón hamburguesa */}
+        <button
+          className={styles.hamburgerButton}
+          onClick={toggleMenu}
+          aria-label="Abrir menú"
+        >
+          {menuOpen ? (
+            <X size={24} color="white" />
+          ) : (
+            <Menu size={24} color="white" />
+          )}
+        </button>
+
         {/* Menú del centro */}
-        <div className={styles.navbarContentCenter}>
+        <div
+          className={`${styles.navbarContentCenter} ${
+            menuOpen ? styles.open : ""
+          }`}
+        >
           {navOptions.map((option) => (
             <div key={option.name} className={styles.navbarItem}>
               <Link
@@ -186,7 +242,6 @@ export default function Navbar({ options = [], onCartToggle }: NavbarProps) {
 
         {/* Lado derecho: carrito + usuario */}
         <div className={styles.navbarContentEnd}>
-          {/* 🔹 Botón del carrito */}
           <button
             className={styles.cartButton}
             onClick={openSidebar}
@@ -198,7 +253,6 @@ export default function Navbar({ options = [], onCartToggle }: NavbarProps) {
             )}
           </button>
 
-          {/* Usuario */}
           {user ? (
             <UserDropdown
               user={user}
