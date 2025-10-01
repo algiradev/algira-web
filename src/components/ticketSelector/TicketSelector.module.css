@@ -128,3 +128,15 @@
   color: #cdeded;
   transform: scale(1.2);
 }
+
+@media (max-width: 800px) {
+  .wrapper {
+    margin: 0 auto;
+  }
+}
+
+@media (max-width: 510px) {
+  .card {
+    padding: 0.2rem;
+  }
+}

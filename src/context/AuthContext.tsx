@@ -66,7 +66,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     const storedToken = localStorage.getItem("accessToken");
     if (!storedToken) {
-      router.push("/login");
+      router.push("/");
       return;
     }
 

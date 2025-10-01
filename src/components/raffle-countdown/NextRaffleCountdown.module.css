@@ -1,0 +1,19 @@
+.text {
+  font-size: 1.8rem;
+  font-weight: 500;
+  text-align: start;
+}
+
+@media (max-width: 500px) {
+  .text {
+    font-size: 1.7rem;
+    width: 300px;
+  }
+}
+
+@media (max-width: 400px) {
+  .text {
+    font-size: 1.8rem;
+    width: 300px;
+  }
+}

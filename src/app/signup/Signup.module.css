@@ -11,6 +11,7 @@
   margin: 3rem auto;
   padding-top: 60px;
 }
+
 .backButton {
   position: absolute;
   top: 0;
@@ -22,15 +23,14 @@
   display: flex;
   justify-content: center;
   flex-direction: column;
-  width: 40%;
   min-width: 380px;
-  max-width: 550px;
+  max-width: 600px;
   height: auto;
   min-height: 650px;
-  background: rgba(255, 255, 255, 0.6);
+  background: white;
   border-radius: 0.5rem;
-  border: 1px solid #cecdcd;
-  box-shadow: 0 5px 35px rgba(0, 0, 0, 0.2);
+  border: 1px solid var(--secundary-color);
+  box-shadow: inset 0 0 25px rgba(0, 0, 0, 0.057);
   padding: 2rem 2.3rem;
 }
 
@@ -57,36 +57,37 @@
   text-align: center;
   font-size: 2rem;
   font-weight: bold;
-  color: #4f4f4f;
+  color: var(--secundary-color);
   margin-bottom: 1rem;
 }
 
 .formGroup {
   margin-bottom: 0.6rem;
   display: flex;
+  justify-content: center;
   flex-direction: column;
   align-items: center;
+  width: auto;
 }
 
 .label {
-  text-align: left;
   align-self: flex-start;
   margin-bottom: 0.25rem;
   font-weight: bold;
   font-size: 1.1rem;
-  color: #4f4f4f;
+  color: var(--secundary-color);
 }
 
 .input {
   padding: 0.5rem;
   border-radius: 6px;
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  border: 1px solid var(--secundary-color);
   font-size: 1rem;
   width: 100%;
   max-width: 305px;
-  background: transparent;
-  color: #4f4f4f;
-  box-shadow: inset 0 0 25px rgba(0, 0, 0, 0.2);
+  background: white;
+  color: black;
+  box-shadow: inset 0 0 25px rgba(0, 0, 0, 0.057);
 }
 
 .error {

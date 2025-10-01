@@ -65,7 +65,9 @@ export default function FeedbackForm() {
 
   return (
     <form className={styles.form} onSubmit={handleSubmit}>
-      <h2 className={styles.title}>¡Dinos lo que quieres! Puede ser tuyo</h2>
+      <h2 className={styles.title}>
+        ¡Dinos lo que quieres! <br /> Puede ser tuyo
+      </h2>
 
       <div className={styles.field}>
         <label htmlFor="email" className={styles.label}>

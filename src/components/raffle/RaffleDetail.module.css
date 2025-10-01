@@ -166,41 +166,29 @@
 /* Media Queries */
 @media (max-width: 576px) {
   .raffleDetails {
-    flex-wrap: wrap;
-    margin: 0;
-    padding: 1rem;
-    border-radius: 0;
-    background: transparent;
-    border-bottom: none;
+    margin: 1rem auto;
   }
-
   .backButtonWrapper {
-    margin: -0.2rem 0 0.5rem 1rem;
+    left: 2%;
   }
 
   .raffleTitle {
     font-size: 1.5rem;
   }
 
-  .raffleFigure {
-    height: 50%;
-    margin: 0;
-  }
-
   .cardButton {
     font-size: 1rem;
-    margin: 0;
-  }
-
-  .raffleRow {
-    flex-wrap: wrap;
   }
 }
 
 @media (max-width: 768px) {
-  .raffleDetails {
-    flex-wrap: wrap;
-    margin-bottom: 0;
+  .raffleInfo {
+    flex-direction: column;
+  }
+
+  .raffleContent {
+    width: 90%;
+    padding: 1rem 3rem 5rem 3rem;
   }
 
   .raffleTitle {
@@ -208,25 +196,30 @@
   }
 
   .raffleFigure {
-    width: 10%;
-    margin: 0;
+    width: 80%;
   }
 
   .cardButton {
     font-size: 1rem;
     margin: 0;
   }
-
-  .raffleRow {
-    flex-wrap: wrap;
-  }
 }
 
-@media (max-width: 992px) {
+@media (max-width: 1000px) {
+  .backButtonWrapper {
+    left: 5%;
+  }
+
   .raffleDetails {
     flex-wrap: wrap;
     margin-bottom: 0;
-    padding: 1rem;
+    padding: 1rem 0;
+    width: 90%;
+    background-color: white;
+  }
+
+  .raffleContent {
+    padding: 1rem 2rem 5rem 1rem;
   }
 
   .rafflePurchase {

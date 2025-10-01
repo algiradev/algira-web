@@ -11,4 +11,5 @@ export type MyRaffle = {
   availableAmount?: number;
   product: MyProduct;
   tickets?: MyTicket[];
+  isDrawn?: boolean;
 };

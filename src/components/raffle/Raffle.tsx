@@ -58,12 +58,14 @@ export default function Raffle({
           <p className={styles.hour}>{formatDateTime(raffle.endDate)}</p>
         </div>
 
-        <div className={styles.color}>
-          <h3>Precio:</h3>
-          <p>
-            <strong>{raffle.price} USD</strong>
-          </p>
-        </div>
+        {isSale && (
+          <div className={styles.color}>
+            <h3>Precio:</h3>
+            <p>
+              <strong>{raffle.price} USD</strong>
+            </p>
+          </div>
+        )}
 
         {total !== undefined && total > 0 && (
           <div className={styles.color}>
@@ -74,7 +76,7 @@ export default function Raffle({
           </div>
         )}
 
-        {endDate < today ? (
+        {hideBuyButton ? null : endDate < today ? (
           <Link
             href={`/results`}
             className={`${styles.button} ${styles.disabled}`}

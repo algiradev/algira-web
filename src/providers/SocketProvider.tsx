@@ -25,8 +25,8 @@ export const SocketProvider = ({ children }: { children: ReactNode }) => {
     const s = io(STRAPI_URL);
     setSocket(s);
 
-    s.on("connect", () => console.log("Socket conectado:", s.id));
-    s.on("disconnect", () => console.log("Socket desconectado"));
+    s.on("connect", () => {});
+    s.on("disconnect", () => {});
 
     return () => {
       s.disconnect();

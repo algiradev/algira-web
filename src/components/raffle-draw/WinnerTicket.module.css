@@ -1,0 +1,34 @@
+.ticketWrapper {
+  display: flex;
+  justify-content: center;
+  transform-style: preserve-3d;
+}
+
+.ticket {
+  width: 150px;
+  height: 180px;
+  background: #fffbea;
+  border: 2px dashed #f6b93b;
+  border-radius: 8px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.ticketContent {
+  font-family: "Inter", sans-serif;
+  font-size: 18px;
+  font-weight: bold;
+  color: #333;
+  text-align: center;
+}
+
+.name {
+  color: #007bff;
+}
+
+.number {
+  color: #e74c3c;
+}

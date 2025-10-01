@@ -91,3 +91,32 @@
 .purchaseTable tbody td {
   color: black;
 }
+
+@media (max-width: 775px) {
+  .invoiceCard,
+  .raffleCard {
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 640px) {
+  .invoiceCard,
+  .raffleCard {
+    font-size: 12px;
+  }
+}
+
+@media (max-width: 400px) {
+  .profileTabs {
+    padding: 1rem 0.1rem;
+  }
+
+  .tabs {
+    justify-content: center;
+    align-items: center;
+  }
+
+  .purchaseTable th {
+    padding: 4px;
+  }
+}
