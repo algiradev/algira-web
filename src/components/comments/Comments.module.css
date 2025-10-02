@@ -1,0 +1,101 @@
+.comments {
+  padding: 6rem 2rem;
+  background: linear-gradient(180deg, var(--secundary-color) 0%, white 40%);
+  width: 100%;
+  min-height: 72vh;
+  height: 72vh;
+  margin: 0 auto;
+  padding: 0 5rem;
+  padding-top: 5rem;
+}
+
+.title {
+  text-align: center;
+  margin-bottom: 3rem;
+  color: var(--primary-color);
+  font-size: 3rem;
+  font-weight: bold;
+}
+
+.swiper {
+  padding-top: 1.5rem;
+  height: 50vh;
+}
+
+.card {
+  margin: 0 auto;
+  background: #fff;
+  border-radius: 12px;
+  padding: 2rem;
+  text-align: center;
+  box-shadow: 0 30px 40px rgba(0, 0, 0, 0.39);
+  min-height: 350px; /* altura mínima segura */
+  max-height: 100%; /* nunca se pase del contenedor */
+  height: auto;
+  min-width: 215px;
+  width: 60%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: all 0.3s ease-in-out;
+}
+
+.card:hover {
+  transform: scale(1.05);
+}
+
+.avatar {
+  border-radius: 50%;
+  border: 2px solid var(--secundary-color);
+  margin-bottom: 1rem;
+}
+
+.name {
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  color: #333;
+}
+
+.text {
+  font-size: 1rem;
+  font-style: italic;
+  color: #555;
+  line-height: 1.5rem;
+}
+
+.stars {
+  margin-bottom: 1rem;
+  font-size: 1.2rem;
+}
+
+.starFilled {
+  color: gold;
+  margin-right: 2px;
+}
+
+.starEmpty {
+  color: lightgray;
+  margin-right: 2px;
+}
+
+@media (max-width: 540px) {
+  .comments {
+    height: 80vh;
+    width: 100%;
+    padding: 0;
+    padding-top: 8rem;
+  }
+
+  .title {
+    font-size: 2rem;
+  }
+
+  .text {
+    font-size: 0.9rem;
+  }
+
+  .card {
+    height: 32vh;
+  }
+}
