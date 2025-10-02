@@ -9,6 +9,8 @@ import { AuthProvider } from "@/context/AuthContext";
 import { CartProvider } from "@/context/useCart";
 import NavbarWithCart from "@/components/navbar/NavbarWithCart";
 import { SocketProvider } from "@/providers/SocketProvider";
+import Footer from "@/components/footer/Footer";
+import ScrollToTop from "@/components/scroll-to-top/ScrollToTop";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -42,7 +44,12 @@ export default function RootLayout({
           <AuthProvider>
             <CartProvider>
               <NavbarWithCart />
-              <main className={styles.mainContent}>{children}</main>
+              <main className={styles.mainContent}>
+                <ScrollToTop />
+                {children}
+
+                <Footer />
+              </main>
             </CartProvider>
           </AuthProvider>
         </SocketProvider>

@@ -1,0 +1,242 @@
+.wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 90vh;
+  background: var(--primary-color);
+  position: relative;
+}
+
+.sectionContainer {
+  position: relative;
+  width: 100%;
+  height: 90vh;
+}
+
+.clip {
+  position: absolute;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+
+  transition: clip-path 0.5s ease, z-index 0.5s ease;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.clip:hover {
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+  z-index: 10;
+}
+
+.sectionContainer:hover .clip:not(:hover) {
+  opacity: 0.5;
+  transition: opacity 0.5s ease;
+}
+
+.wrapperContent {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: backdrop-filter 0.5s ease;
+}
+
+.clip:hover .wrapperContent {
+  backdrop-filter: brightness(40%);
+}
+
+.content {
+  position: relative;
+  bottom: -100%;
+  width: 65%;
+  padding: 20px;
+  transition: bottom 0.5s ease, opacity 0.5s ease;
+  color: var(--color-text);
+}
+
+.contentTitleShort {
+  display: none;
+}
+
+.clipTitle {
+  position: absolute;
+  top: 50%;
+  font-size: 2rem;
+  font-weight: bold;
+  opacity: 1;
+  text-shadow: 0px 0px 20px rgb(0, 0, 0);
+  z-index: 5;
+  color: white;
+  transition: opacity 0.5s ease;
+}
+
+.clipTitle-0 {
+  left: 7%;
+}
+
+.clipTitle-1 {
+  left: 47%;
+}
+
+.clipTitle-2 {
+  left: 84%;
+}
+
+.clip:hover .clipTitle {
+  opacity: 0;
+}
+
+.clip:hover .content {
+  bottom: -1rem;
+  opacity: 1;
+}
+
+.content h2 {
+  margin-bottom: 3rem;
+  font-size: 2.5rem;
+  font-weight: bold;
+}
+
+.content p {
+  font-size: 1.2rem;
+  line-height: 2.5rem;
+}
+
+.clip1 {
+  clip-path: polygon(0 0, 33% 0, 23% 100%, 0 100%);
+}
+
+.clip2 {
+  z-index: 1;
+  clip-path: polygon(33% 0, 77% 0, 67% 100%, 23% 100%);
+}
+
+.clip3 {
+  clip-path: polygon(77% 0, 100% 0, 100% 100%, 67% 100%);
+}
+
+@media (max-width: 1570px) {
+  .content {
+    bottom: -150%;
+  }
+}
+
+@media (max-width: 1500px) {
+  .content h2 {
+    font-size: 2.2rem;
+  }
+
+  .content p {
+    font-size: 1.1rem;
+    line-height: 2rem;
+  }
+}
+
+@media (max-width: 1300px) {
+  .clipTitle {
+    font-size: 1.5rem;
+  }
+
+  .content h2 {
+    font-size: 2rem;
+  }
+
+  .content p {
+    font-size: 1rem;
+    line-height: 1.8rem;
+  }
+}
+
+@media (max-width: 930px) {
+  .clipTitle {
+    font-size: 1.2rem;
+  }
+
+  .content h2 {
+    font-size: 2rem;
+  }
+
+  .content p {
+    font-size: 1rem;
+    line-height: 1.5rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .sectionContainer {
+    height: auto;
+  }
+
+  .wrapperContent {
+    backdrop-filter: brightness(40%);
+  }
+
+  .clip {
+    position: relative;
+    width: 100%;
+    height: 60vh;
+    clip-path: none;
+    margin-bottom: 0.5rem;
+    clip-path: none;
+  }
+
+  .clipTitle-0,
+  .clipTitle-1,
+  .clipTitle-2 {
+    width: fit-content;
+    font-size: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  .content {
+    width: 90%;
+    bottom: -1rem;
+  }
+
+  .clipTitle {
+    display: none;
+  }
+
+  .content h2 {
+    font-size: 1.5rem;
+  }
+
+  .content p {
+    font-size: 1rem;
+    line-height: 1.1rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .content h2 {
+    font-size: 1.4rem;
+  }
+
+  .content p {
+    font-size: 0.8rem;
+  }
+}
+
+@media (max-width: 500px) {
+  .contentText {
+    display: none;
+  }
+
+  .contentTitleShort {
+    display: block;
+  }
+
+  .content h2 {
+    font-size: 1.2rem;
+  }
+
+  .content p {
+    font-size: 0.7rem;
+  }
+}

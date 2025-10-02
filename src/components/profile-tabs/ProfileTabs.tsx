@@ -4,6 +4,7 @@ import { useState } from "react";
 import { MyInvoice } from "@/types/invoice";
 import { formatDateTime } from "@/utils/formatDate";
 import styles from "./ProfileTabs.module.css";
+import Link from "next/link";
 
 type ProfileTabsProps = {
   invoices: MyInvoice[];
@@ -135,19 +136,21 @@ export default function ProfileTabs({ invoices }: ProfileTabsProps) {
                 )?.raffle;
                 if (!raffle) return null;
                 return (
-                  <div key={raffle.id} className={styles.raffleCard}>
-                    <p>
-                      <strong>Rifa:</strong> {raffle.title}
-                    </p>
-                    <p>
-                      <strong>Fecha sorteo:</strong>{" "}
-                      {formatDateTime(raffle.endDate)}
-                    </p>
-                    <p>
-                      <strong>Tickets:</strong>{" "}
-                      {numbers.sort((a, b) => a - b).join(", ")}
-                    </p>
-                  </div>
+                  <Link href={`/raffle/${raffle.id}`} key={raffle.id}>
+                    <div className={styles.raffleCard}>
+                      <p>
+                        <strong>Rifa:</strong> {raffle.title}
+                      </p>
+                      <p>
+                        <strong>Fecha sorteo:</strong>{" "}
+                        {formatDateTime(raffle.endDate)}
+                      </p>
+                      <p>
+                        <strong>Tickets:</strong>{" "}
+                        {numbers.sort((a, b) => a - b).join(", ")}
+                      </p>
+                    </div>
+                  </Link>
                 );
               })
             )}

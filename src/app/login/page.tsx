@@ -68,12 +68,12 @@ export default function LoginPage() {
     }
   };
 
+  if (submitting) <Loader />;
+
   return (
     <div className={styles.form__container}>
       <div className={styles.form__card}>
         <h2 className={styles.title}>Ingreso</h2>
-
-        {submitting && <Loader />}
 
         <form onSubmit={handleSubmit(onSubmit)} className={styles.signup__form}>
           {/* Email */}

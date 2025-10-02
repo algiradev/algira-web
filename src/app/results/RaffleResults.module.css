@@ -1,0 +1,105 @@
+.profileTabs {
+  width: 50%;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 5px 25px rgba(0, 0, 0, 0.1);
+  padding: 1rem;
+  min-height: 100vh;
+  margin: 5rem auto;
+}
+
+.tabContent {
+  width: 100%;
+}
+
+.scrollWrapper {
+  text-align: center;
+  overflow-y: auto;
+  padding-right: 0.5rem;
+}
+
+.noResults {
+  color: black;
+}
+
+.scrollWrapper::-webkit-scrollbar {
+  width: 8px;
+}
+
+.scrollWrapper::-webkit-scrollbar-thumb {
+  background-color: var(--secundary-color);
+  border-radius: 8px;
+}
+
+.scrollWrapper {
+  scrollbar-width: thin;
+  scrollbar-color: var(--secundary-color) #f0f0f0;
+}
+
+.raffleCard {
+  background: #f9f9f9;
+  padding: 12px;
+  margin-bottom: 12px;
+  border-radius: 8px;
+}
+
+.raffleCard p {
+  color: black;
+}
+
+.purchaseTableWrapper {
+  overflow-x: auto;
+}
+
+.purchaseTable {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 6px;
+  table-layout: fixed;
+}
+
+.purchaseTable th,
+.purchaseTable td {
+  border: 1px solid #ccc;
+  padding: 6px 8px;
+  text-align: center;
+}
+
+.purchaseTable th {
+  background-color: var(--secundary-color);
+  color: #fff;
+}
+
+.purchaseTable tbody td {
+  color: black;
+}
+
+@media (max-width: 1120px) {
+  .profileTabs {
+    width: 70%;
+  }
+}
+
+@media (max-width: 850px) {
+  .profileTabs {
+    width: 80%;
+  }
+}
+
+@media (max-width: 750px) {
+  .profileTabs {
+    width: 80%;
+  }
+
+  .purchaseTable th,
+  .purchaseTable td,
+  .raffleCard p {
+    font-size: 0.8rem;
+  }
+}
+
+@media (max-width: 750px) {
+  .profileTabs {
+    width: 90%;
+  }
+}

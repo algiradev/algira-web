@@ -2,14 +2,12 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background: linear-gradient(
-    -27deg,
-    var(--secundary-color) 50%,
-    var(--primary-color) 50%
-  );
-  position: relative;
-  margin: 3rem auto;
   padding-top: 60px;
+  padding-bottom: 1rem;
+  position: relative;
+  margin: 2rem auto;
+  min-height: 100vh;
+  height: 100%;
 }
 
 .backButton {

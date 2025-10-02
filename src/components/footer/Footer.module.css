@@ -1,0 +1,143 @@
+.footer {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  /* min-height: 50vh; */
+  border-top: 2px solid var(--bg-white);
+  background-color: var(--primary-color);
+  color: var(--color-text);
+  animation: 4s infinite glow;
+  padding: 1rem;
+  padding-top: 2rem;
+}
+
+/* GRID SYSTEM */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  text-align: start;
+  margin: 0 auto;
+  width: 80%;
+}
+
+.col {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.col:nth-child(1) {
+  justify-self: start; /* alineada a la izquierda */
+  text-align: left;
+}
+
+.col:nth-child(2) {
+  justify-self: center; /* alineada al centro */
+}
+
+.col:nth-child(3) {
+  justify-self: end; /* alineada a la derecha */
+}
+
+.h2 {
+  font-weight: bold;
+}
+
+.ul li {
+  list-style: none;
+  margin: 10px 0;
+}
+
+.link {
+  text-decoration: none;
+  color: var(--color-text);
+}
+
+.link:hover {
+  text-decoration: underline;
+}
+
+.socialNetworks {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+}
+
+.snLink img {
+  transition: transform 0.3s ease;
+}
+
+.snLink img:hover {
+  transform: scale(1.2);
+}
+
+.snWrapper {
+  display: flex;
+  justify-content: center;
+  margin-top: 2rem;
+}
+
+.gridDevelsoft {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 0.875rem;
+  opacity: 0.8;
+  width: 100%;
+  margin-top: 3rem;
+  color: white;
+  transition: all 0.3s ease-in-out;
+}
+
+.develsoftLink {
+  cursor: pointer;
+  font-weight: 600;
+  color: rgb(41, 202, 252);
+}
+
+/* Animación borde */
+@keyframes glow {
+  0% {
+    border-color: #b2dbd8;
+  }
+  25% {
+    border-color: #7fc4be;
+  }
+  75% {
+    border-color: #32a097;
+  }
+  100% {
+    border-color: var(--secundary-color);
+  }
+}
+
+/* 📱 Responsive */
+@media (max-width: 768px) {
+  .grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .socialNetworks {
+    justify-content: flex-end;
+  }
+}
+
+@media (max-width: 500px) {
+  .grid {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+  }
+
+  .h2,
+  .ul li {
+    font-size: 0.9rem;
+  }
+
+  .snLink img {
+    height: 2rem;
+    width: auto;
+  }
+}
