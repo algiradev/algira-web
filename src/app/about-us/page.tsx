@@ -17,7 +17,6 @@ export default function AboutUs() {
       try {
         const { data } = await getAboutUs();
         setAboutUs(data);
-        console.log("aboutUs", data);
       } catch (err) {
         console.error(err);
       } finally {

@@ -12,13 +12,20 @@ import { useCart } from "@/context/useCart";
 type User = {
   id: number;
   username: string;
-  avatar?: string;
+  avatar?: Media | null;
+};
+
+type Media = {
+  url?: string;
 };
 
 type NavOption = {
   name: string;
   href: string;
 };
+
+const STRAPI_URL =
+  process.env.NEXT_PUBLIC_STRAPI_URL || "http://localhost:1337";
 
 export const AlgiraLogo = () => {
   return (
@@ -69,10 +76,12 @@ const UserDropdown = ({
     <div className={styles.dropdownContainer} ref={dropdownRef}>
       <button className={styles.userButton} onClick={onToggle}>
         {user.avatar ? (
-          <img
-            src={user.avatar}
+          <Image
+            src={`${STRAPI_URL}${user.avatar?.url}`}
             alt={user.username}
             className={styles.avatar}
+            width={32}
+            height={32}
           />
         ) : (
           <span className={styles.avatarPlaceholder}>
@@ -130,7 +139,7 @@ type NavbarProps = {
   onCartToggle?: () => void;
 };
 
-export default function Navbar({ options = [], onCartToggle }: NavbarProps) {
+export default function Navbar({ options = [] }: NavbarProps) {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const pathname = usePathname();
   const { user, logout } = useAuth();

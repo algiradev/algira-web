@@ -23,45 +23,38 @@ export default function RaffleDrawUI({
   const [celebrate, setCelebrate] = useState(false);
 
   useEffect(() => {
-    // if (winnerNumber && winnerName) {
-    // Esperar 3 segundos después de que se revele el número
     const timer = setTimeout(() => {
       setShowTicket(true);
     }, 500);
 
     return () => clearTimeout(timer);
-    // }
   }, [winnerNumber, winnerName]);
 
-  // Cuando el ticket aparece → activar celebración
   useEffect(() => {
     if (showWinnerTicket) {
       setCelebrate(true);
-      // apaga confetti después de 8s
-      // const t = setTimeout(() => setCelebrate(false), 8000);
-      // return () => clearTimeout(t);
     }
   }, [showWinnerTicket]);
+  console.log("number", winnerNumber);
 
   return (
     <>
       <div
         style={{
           textAlign: "center",
-          // width: "100%",
           position: "relative",
         }}
       >
         <div style={{ position: "relative", display: "inline-block" }}>
           <SlotMachine
-            winningNumber={winnerNumber ?? "000"}
+            winningNumber={winnerNumber ?? "0000"}
             onFinished={() => setShowWinnerTicket(true)}
           />
 
           {showWinnerTicket && (
             <WinnerTicket
               name={winnerName ?? ""}
-              number={winnerNumber ?? "000"}
+              number={winnerNumber ?? "0000"}
             />
           )}
         </div>

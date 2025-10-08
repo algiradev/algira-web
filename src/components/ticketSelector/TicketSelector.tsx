@@ -36,6 +36,7 @@ export default function TicketSelector({
   const { socket } = useSocket(); // asumimos que user está en el provider de socket
   const [unavailable, setUnavailable] = useState<Ticket[]>(unavailableTickets);
   const [selected, setSelected] = useState<Ticket[]>(selectedTickets);
+  const [blocked, setBlocked] = useState(false);
 
   useEffect(() => {
     const storedUser = localStorage.getItem("user");
@@ -51,6 +52,19 @@ export default function TicketSelector({
   useEffect(() => {
     setSelected(selectedTickets);
   }, [selectedTickets]);
+
+  // Bloquear compra si la rifa está a menos de 3 minutos
+  useEffect(() => {
+    const checkBlocked = () => {
+      const now = Date.now();
+      const end = new Date(raffle.endDate ?? "00/00/0000").getTime();
+      setBlocked(end - now <= 3 * 60 * 1000);
+    };
+
+    checkBlocked();
+    const interval = setInterval(checkBlocked, 1000);
+    return () => clearInterval(interval);
+  }, [raffle.endDate]);
 
   // Suscribirse a actualizaciones del socket
   useEffect(() => {

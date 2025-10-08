@@ -6,7 +6,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "react-toastify";
 import { useRouter, useSearchParams } from "next/navigation";
 
-import { login, MyApiLoginResponse } from "@/lib/api/user";
+import { login } from "@/lib/api/user";
 import Loader from "@/components/loader/Loader";
 import { loginSchema, LoginFormValues } from "@/lib/validation/loginSchema";
 
@@ -14,10 +14,13 @@ import styles from "./Login.module.css";
 import Button from "@/components/button/Button";
 import { useAuth } from "@/context/AuthContext";
 import { useCart } from "@/context/useCart";
+import { MyApiLoginResponse } from "@/types/user";
+import { Eye, EyeOff } from "lucide-react";
 
 export default function LoginPage() {
   const [submitting, setSubmitting] = useState(false);
   const [loginError, setLoginError] = useState<string | null>(null);
+  const [showPassword, setShowPassword] = useState(false);
   const searchParams = useSearchParams();
   const router = useRouter();
   const { setUser } = useAuth();
@@ -44,6 +47,7 @@ export default function LoginPage() {
 
       const res: MyApiLoginResponse = await login(data.email, data.password);
 
+      console.log("Login", res);
       if (!res.accessToken) {
         toast.error(
           "Debes confirmar tu correo antes de iniciar sesión. Revisa tu bandeja de entrada."
@@ -98,11 +102,21 @@ export default function LoginPage() {
           <div className={styles.formGroup}>
             <label className={styles.label}>Contraseña</label>
             <input
-              type="password"
+              type={showPassword ? "text" : "password"}
               {...register("password")}
               className={styles.input}
               disabled={submitting}
             />
+            <button
+              type="button"
+              onClick={() => setShowPassword((prev) => !prev)}
+              className={styles.toggleButton}
+              aria-label={
+                showPassword ? "Ocultar contraseña" : "Mostrar contraseña"
+              }
+            >
+              {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+            </button>
             <p
               className={`${styles.error} ${
                 errors.password ? styles.visible : ""

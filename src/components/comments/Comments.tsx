@@ -9,6 +9,7 @@ import Image from "next/image";
 import styles from "./Comments.module.css";
 import { useEffect, useState } from "react";
 import { CommentItem, getComments } from "@/lib/api/comment";
+import Loader from "../loader/Loader";
 
 const STRAPI_URL =
   process.env.NEXT_PUBLIC_STRAPI_URL || "http://localhost:1337";
@@ -22,7 +23,6 @@ export default function Comments() {
       try {
         const { data } = await getComments();
         setComments(data);
-        console.log("comments", data);
       } catch (err) {
         console.error(err);
       } finally {
@@ -32,7 +32,7 @@ export default function Comments() {
     fetchResults();
   }, []);
 
-  if (loading) return <p>Cargando comentarios...</p>;
+  if (loading) return <Loader />;
 
   return (
     <section className={styles.comments}>

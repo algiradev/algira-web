@@ -155,3 +155,20 @@
   opacity: 0.6;
   cursor: not-allowed;
 }
+
+.toggleButton {
+  position: absolute;
+  left: 82%;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: #555;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.2s;
+}
+
+.toggleButton:hover {
+  color: #000;
+}

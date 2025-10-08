@@ -14,10 +14,14 @@ import {
 import Loader from "@/components/loader/Loader";
 import Button from "@/components/button/Button";
 import styles from "../../login/Login.module.css";
+import { Eye, EyeOff } from "lucide-react";
 
 export default function ResetPasswordPage() {
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [showPassword, setShowPassword] = useState(false);
+  const [showPasswordConfirm, setShowPasswordConfirm] = useState(false);
+
   const router = useRouter();
   const { token } = useParams<{ token: string }>();
 
@@ -56,21 +60,30 @@ export default function ResetPasswordPage() {
 
   return (
     <div className={styles.form__container}>
+      {submitting && <Loader />}
       <div className={styles.form__card}>
         <h2 className={styles.title}>Nueva Contraseña</h2>
-
-        {submitting && <Loader />}
 
         <form onSubmit={handleSubmit(onSubmit)} className={styles.signup__form}>
           {/* Password */}
           <div className={styles.formGroup}>
             <label className={styles.label}>Nueva Contraseña</label>
             <input
-              type="password"
+              type={showPassword ? "text" : "password"}
               {...register("password")}
               className={styles.input}
               disabled={submitting}
             />
+            <button
+              type="button"
+              onClick={() => setShowPassword((prev) => !prev)}
+              className={styles.toggleButton}
+              aria-label={
+                showPassword ? "Ocultar contraseña" : "Mostrar contraseña"
+              }
+            >
+              {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+            </button>
             <p
               className={`${styles.error} ${
                 errors.password ? styles.visible : ""
@@ -84,11 +97,23 @@ export default function ResetPasswordPage() {
           <div className={styles.formGroup}>
             <label className={styles.label}>Confirmar Contraseña</label>
             <input
-              type="password"
+              type={showPasswordConfirm ? "text" : "password"}
               {...register("confirmPassword")}
               className={styles.input}
               disabled={submitting}
             />
+            <button
+              type="button"
+              onClick={() => setShowPasswordConfirm((prev) => !prev)}
+              className={styles.toggleButton}
+              aria-label={
+                showPasswordConfirm
+                  ? "Ocultar contraseña"
+                  : "Mostrar contraseña"
+              }
+            >
+              {showPasswordConfirm ? <EyeOff size={20} /> : <Eye size={20} />}
+            </button>
             <p
               className={`${styles.error} ${
                 errors.confirmPassword ? styles.visible : ""

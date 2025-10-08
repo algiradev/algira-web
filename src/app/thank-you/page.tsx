@@ -39,6 +39,11 @@ export default function ThankYou() {
           Hemos enviado un email a <strong>{email}</strong> con los detalles de
           tu compra
         </p>
+        <br />
+        <p>
+          En tu perffil puedes ver tu historial de compra y rifas en las que
+          participas
+        </p>
         <p className={styles.redirect}>
           Serás redirigido a la página principal...
         </p>

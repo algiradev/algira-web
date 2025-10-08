@@ -49,10 +49,9 @@ export default function ForgotPasswordPage() {
 
   return (
     <div className={styles.form__container}>
+      {submitting && <Loader />}
       <div className={styles.form__card}>
         <h2 className={styles.title}>Restablecer Contraseña</h2>
-
-        {submitting && <Loader />}
 
         <form onSubmit={handleSubmit(onSubmit)} className={styles.signup__form}>
           {/* Email */}

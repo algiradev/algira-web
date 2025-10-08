@@ -1,68 +1,13 @@
+import {
+  MyApiForgotPasswordResponse,
+  MyApiLoginResponse,
+  MyApiResetPasswordResponse,
+  MyApiSignUpRequest,
+  MyApiSignUpResponse,
+  MyApiUpdateUserResponse,
+  ProfileFormValues,
+} from "@/types/user";
 import { toast } from "react-toastify";
-
-export type MyApiUser = {
-  id: number;
-  email: string;
-  username: string;
-  firstName?: string;
-  lastName?: string;
-  phoneNumber?: string;
-  zipCode?: string;
-  address?: string;
-  avatar?: string;
-  city?: string;
-  businessId?: number;
-  countryId?: number;
-  status_user?: string;
-  rolId?: number;
-};
-
-export type MyApiLoginResponse = {
-  accessToken: string;
-  user: MyApiUser;
-  expiresIn: number;
-};
-
-export type MyApiSignUpRequest = {
-  username: string;
-  firstName: string;
-  lastName: string;
-  email: string;
-  password: string;
-  countryId?: number;
-  phoneNumber?: string;
-  address?: string;
-  zipCode?: string;
-};
-
-export type MyApiSignUpResponse = {
-  message: string;
-};
-
-export type MyApiForgotPasswordResponse = {
-  message: string;
-  tokenEmail?: string;
-};
-
-export type MyApiResetPasswordResponse = {
-  message: string;
-};
-
-export type MyApiUpdateUserResponse = {
-  message: string;
-  user: MyApiUser;
-};
-
-export type ProfileFormValues = {
-  username: string;
-  firstName: string;
-  lastName: string;
-  email: string;
-  countryId: number;
-  phoneNumber: string;
-  address: string;
-  zipCode: string;
-};
 
 const API_URL =
   process.env.NEXT_PUBLIC_STRAPI_URL ?? "http://localhost:1337/api";
@@ -190,17 +135,16 @@ export async function updateUser(
   return res.json();
 }
 
-export async function uploadAvatar(id: number, file: File): Promise<string> {
+export async function uploadAvatar(
+  file: File
+): Promise<MyApiUpdateUserResponse> {
   const token = localStorage.getItem("accessToken");
   if (!token) throw new Error("No estás autenticado.");
 
   const formData = new FormData();
   formData.append("files", file);
-  formData.append("ref", "plugin::users-permissions.user");
-  formData.append("refId", id.toString());
-  formData.append("field", "avatar");
 
-  const res = await fetch(`${API_URL}/upload`, {
+  const res = await fetch(`${API_URL}/auth/update-avatar`, {
     method: "POST",
     headers: {
       Authorization: `Bearer ${token}`,
@@ -213,6 +157,5 @@ export async function uploadAvatar(id: number, file: File): Promise<string> {
     throw new Error(err?.error?.message || "No se pudo subir la imagen.");
   }
 
-  const data = await res.json();
-  return data[0].url;
+  return res.json();
 }
