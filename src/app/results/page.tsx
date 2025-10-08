@@ -16,7 +16,6 @@ export default function ResultsPage() {
       try {
         const { data } = await getRaffleResults();
         setResults(data);
-        console.log("resutls", data);
       } catch (err) {
         console.error(err);
       } finally {

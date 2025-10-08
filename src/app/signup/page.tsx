@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "react-toastify";
@@ -17,10 +17,13 @@ import { signUpSchema, SignUpFormValues } from "@/lib/validation/signupSchema";
 
 import styles from "./Signup.module.css";
 import Button from "@/components/button/Button";
+import { getCountries } from "@/lib/api/country";
+import { MyApiCountry } from "@/types/country";
+import { Eye, EyeOff } from "lucide-react";
 
 export default function SignupPage() {
   const [loading, setLoading] = useState(false);
-  const [countries, setCountries] = useState<{ id: number; name: string }[]>([
+  const [countries, setCountries] = useState<MyApiCountry[]>([
     {
       id: 1,
       name: "Venezuela",
@@ -34,6 +37,7 @@ export default function SignupPage() {
       name: "Suiza",
     },
   ]);
+  const [showPassword, setShowPassword] = useState(false);
 
   const router = useRouter();
 
@@ -48,20 +52,6 @@ export default function SignupPage() {
   });
 
   // Fetch countries
-  // useEffect(() => {
-  //   async function fetchCountries() {
-  //     try {
-  //       const res = await fetch(
-  //         `${process.env.NEXT_PUBLIC_STRAPI_URL}/country`
-  //       );
-  //       const data = await res.json();
-  //       setCountries(data);
-  //     } catch (err) {
-  //       console.error(err);
-  //     }
-  //   }
-  //   fetchCountries();
-  // }, []);
 
   const onSubmit = async (data: SignUpFormValues) => {
     try {
@@ -86,16 +76,25 @@ export default function SignupPage() {
     }
   };
 
+  useEffect(() => {
+    async function fetchCountries() {
+      try {
+        const response = await getCountries();
+        setCountries(response.data);
+        console.log(response);
+      } catch (err) {
+        console.error(err);
+      }
+    }
+    fetchCountries();
+  }, []);
+
   return (
     <>
-      <div className={styles.backButton}>
-        <BackButton />
-      </div>
       <div className={styles.form__container}>
+        {loading && <Loader />}
         <div className={styles.form__card}>
           <h2 className={styles.title}>Registro</h2>
-
-          {loading && <Loader />}
 
           <form onSubmit={handleSubmit(onSubmit)}>
             <div className={styles.formGroup}>
@@ -165,12 +164,25 @@ export default function SignupPage() {
 
             <div className={styles.formGroup}>
               <label className={styles.label}>Contraseña</label>
+
               <input
                 className={styles.input}
-                type="password"
+                type={showPassword ? "text" : "password"}
                 {...register("password")}
                 disabled={loading}
               />
+
+              <button
+                type="button"
+                onClick={() => setShowPassword((prev) => !prev)}
+                className={styles.toggleButton}
+                aria-label={
+                  showPassword ? "Ocultar contraseña" : "Mostrar contraseña"
+                }
+              >
+                {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+              </button>
+
               <p
                 className={`${styles.error} ${
                   errors.password ? styles.visible : ""

@@ -11,7 +11,7 @@ import "react-phone-number-input/style.css";
 
 import Loader from "@/components/loader/Loader";
 import Button from "@/components/button/Button";
-import { MyApiUser, updateUser, uploadAvatar } from "@/lib/api/user";
+import { updateUser, uploadAvatar } from "@/lib/api/user";
 import {
   profileSchema,
   ProfileFormValues,
@@ -23,35 +23,28 @@ import { useAuth } from "@/context/AuthContext";
 import { useCart } from "@/context/useCart";
 import { MyInvoice } from "@/types/invoice";
 import { getUserInvoices } from "@/lib/api/invoice";
-import { formatDateTime } from "@/utils/formatDate";
 import { isTokenExpired } from "@/utils/jwt";
 import ProfileTabs from "@/components/profile-tabs/ProfileTabs";
+import { MyApiUser } from "@/types/user";
+import { Camera } from "lucide-react";
+import { getCountries } from "@/lib/api/country";
+import { MyApiCountry } from "@/types/country";
+
+const STRAPI_URL =
+  process.env.NEXT_PUBLIC_STRAPI_URL || "http://localhost:1337";
 
 export default function Profile() {
   const inputImage = useRef<HTMLInputElement>(null);
-  const [user, setUserProfile] = useState<MyApiUser | null>(null);
+  const [userProfile, setUserProfile] = useState<MyApiUser | null>(null);
   const [urlTempImage, setUrlTempImage] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(true);
   const [disabled, setDisabled] = useState<boolean>(false);
   const [invoices, setInvoices] = useState<MyInvoice[]>([]);
 
-  const { logout } = useAuth();
+  const { user, setUser, logout } = useAuth();
   const { clearCart } = useCart();
 
-  const [countries, setCountries] = useState<{ id: number; name: string }[]>([
-    {
-      id: 1,
-      name: "Venezuela",
-    },
-    {
-      id: 2,
-      name: "Uruguay",
-    },
-    {
-      id: 3,
-      name: "Suiza",
-    },
-  ]);
+  const [countries, setCountries] = useState<MyApiCountry[]>([]);
 
   const router = useRouter();
 
@@ -113,18 +106,19 @@ export default function Profile() {
 
   const handleChangeImage = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
-    if (file && user) {
+    if (file && userProfile) {
       try {
         const url = URL.createObjectURL(file);
         setUrlTempImage(url);
-        const uploadedUrl = await uploadAvatar(user.id, file);
-        setUserProfile((prev) =>
-          prev ? { ...prev, avatar: uploadedUrl } : null
-        );
-        localStorage.setItem(
-          "user",
-          JSON.stringify({ ...user, avatar: uploadedUrl })
-        );
+
+        const response = await uploadAvatar(file);
+        const updatedUser = response.user;
+
+        setUserProfile(updatedUser);
+        setUser(updatedUser);
+        console.log("image", updatedUser);
+        localStorage.setItem("user", JSON.stringify(updatedUser));
+
         toast.success("Imagen de perfil actualizada.");
       } catch (err) {
         const message =
@@ -135,10 +129,10 @@ export default function Profile() {
   };
 
   const onSubmitForm: SubmitHandler<ProfileFormValues> = async (data) => {
-    if (!user) return;
+    if (!userProfile) return;
     try {
       setLoading(true);
-      const updatedUser = await updateUser(user.id, data);
+      const updatedUser = await updateUser(userProfile.id, data);
       toast.success("Se ha actualizado el usuario exitosamente");
 
       setUserProfile(updatedUser.user);
@@ -172,7 +166,19 @@ export default function Profile() {
     fetchInvoices();
   }, []);
 
-  if (loading || !user) {
+  useEffect(() => {
+    async function fetchCountries() {
+      try {
+        const response = await getCountries();
+        setCountries(response.data);
+      } catch (err) {
+        console.error(err);
+      }
+    }
+    fetchCountries();
+  }, []);
+
+  if (loading || !userProfile) {
     return <Loader />;
   }
 
@@ -180,7 +186,7 @@ export default function Profile() {
     <div className={styles.profile}>
       <section className={styles.profile__header}>
         <div className={styles.profile__header_text}>
-          <h1>Hola {user.firstName}</h1>
+          <h1>Hola {userProfile.firstName}</h1>
           <p>
             Este es tu perfil, donde prodrás ver tu datos, tus tickets
             comprados, ganados y más.
@@ -214,12 +220,21 @@ export default function Profile() {
                 onChange={handleChangeImage}
                 accept="image/png, image/jpeg"
               />
-              <Image
-                src={urlTempImage || user.avatar || "/algira.svg"}
-                width={150}
-                height={150}
-                alt="profile"
-              />
+              <div className={styles.profile__imageWrapper}>
+                <Image
+                  src={
+                    userProfile.avatar?.url
+                      ? `${STRAPI_URL}${userProfile.avatar?.url}`
+                      : "/algira.svg"
+                  }
+                  width={150}
+                  height={150}
+                  alt="profile"
+                />
+                <div className={styles.profile__overlay}>
+                  <Camera size={32} strokeWidth={2} />
+                </div>
+              </div>
             </div>
           </header>
 
@@ -299,6 +314,8 @@ export default function Profile() {
                 className={styles.select}
                 {...register("countryId", { valueAsNumber: true })}
                 disabled={disabled || loading}
+                onChange={(e) => setValue("countryId", Number(e.target.value))}
+                value={watch("countryId")}
               >
                 {countries.map((country) => (
                   <option

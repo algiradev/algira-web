@@ -10,12 +10,11 @@ import {
   useState,
 } from "react";
 import { toast } from "react-toastify";
-import { isTokenExpired } from "@/utils/jwt"; // Ajusta la ruta según donde esté tu util
+import { isTokenExpired } from "@/utils/jwt";
 
 type User = {
   id: number;
   username: string;
-  avatar?: string;
 };
 
 type AuthContextType = {
@@ -25,7 +24,7 @@ type AuthContextType = {
 };
 
 const INACTIVITY_LIMIT = 5 * 60 * 1000;
-const WARNING_TIME = 5 * 1000; // 5s antes del logout
+const WARNING_TIME = 5 * 1000;
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
@@ -66,7 +65,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     const storedToken = localStorage.getItem("accessToken");
     if (!storedToken) {
-      router.push("/");
       return;
     }
 

@@ -18,10 +18,14 @@ function HeroRaffle({
   raffle,
   onExit,
   slotMachine,
+  hasTickets,
+  winnerName,
 }: {
   raffle: MyRaffle;
   onExit: () => void;
   slotMachine?: React.ReactNode;
+  hasTickets?: boolean;
+  winnerName?: string;
 }) {
   const [phase, setPhase] = useState<"enter" | "right" | "done">("enter");
 
@@ -41,6 +45,7 @@ function HeroRaffle({
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
+        zIndex: "2000",
       }}
     >
       <motion.div
@@ -56,27 +61,35 @@ function HeroRaffle({
         }
         transition={{ type: "spring", stiffness: 100, damping: 15 }}
         onAnimationComplete={() => {
-          if (phase === "right") onExit();
+          if (phase === "right") {
+            setInterval(() => {
+              onExit();
+            }, 500);
+          }
         }}
         style={{ pointerEvents: "none" }}
       >
         <Raffle raffle={raffle} isSale={false} user={false} hideBuyButton />
       </motion.div>
 
-      {slotMachine && (
-        <div
-          style={{
-            position: "absolute",
-            top: "50%",
-            left: "50%",
-            transform: "translate(-50%, -50%)",
-            width: "100%",
-            height: "100%",
-          }}
-        >
-          {slotMachine}
-        </div>
-      )}
+      <div
+        style={{
+          position: "absolute",
+          top: "50%",
+          left: "50%",
+          transform: "translate(-50%, -50%)",
+          width: "100%",
+          height: "100%",
+        }}
+      >
+        {hasTickets && slotMachine}
+        {!hasTickets && (
+          <p className="text-xl text-gray-700">
+            {winnerName ||
+              "No se realizará el sorteo porque no se vendió el mínimo de tickets para esta rifa."}
+          </p>
+        )}
+      </div>
     </div>
   );
 }
@@ -91,6 +104,10 @@ const RaffleRoom = () => {
   const [winnerName, setWinnerName] = useState<string>("");
 
   const firstRaffleRef = useRef<HTMLDivElement>(null);
+
+  const [raffleHasTickets, setRaffleHasTickets] = useState(true);
+  const [showCountdown, setShowCountdown] = useState<boolean>(false);
+  const [showNoTicketsMessage, setShowNoTicketsMessage] = useState(false);
 
   const { socket } = useSocket();
 
@@ -113,13 +130,32 @@ const RaffleRoom = () => {
   });
 
   const sortRaffles = (rafflesList: MyRaffle[]) => {
-    const now = Date.now();
     return [...rafflesList].sort((a, b) => {
-      if (a.isDrawn && !b.isDrawn) return 1;
-      if (!a.isDrawn && b.isDrawn) return -1;
-      const aTime = new Date(a.endDate as string).getTime();
-      const bTime = new Date(b.endDate as string).getTime();
-      return aTime - bTime;
+      // 1️⃣ No sorteadas primero
+      if (a.isDrawn !== b.isDrawn) {
+        return a.isDrawn ? 1 : -1;
+      }
+
+      const aTime = new Date(a.endDate ?? 0).getTime();
+      const bTime = new Date(b.endDate ?? 0).getTime();
+
+      // 2️⃣ Si ambas NO están sorteadas → más próxima primero
+      if (!a.isDrawn && !b.isDrawn) {
+        if (isNaN(aTime) && isNaN(bTime)) return 0;
+        if (isNaN(aTime)) return 1;
+        if (isNaN(bTime)) return -1;
+        return aTime - bTime; // ascendente
+      }
+
+      // 3️⃣ Si ambas están sorteadas → más reciente primero
+      if (a.isDrawn && b.isDrawn) {
+        if (isNaN(aTime) && isNaN(bTime)) return 0;
+        if (isNaN(aTime)) return 1;
+        if (isNaN(bTime)) return -1;
+        return bTime - aTime; // descendente
+      }
+
+      return 0;
     });
   };
 
@@ -196,6 +232,7 @@ const RaffleRoom = () => {
   // Countdown finish → activar animación
   const handleCountdownFinish = () => {
     if (raffles.length > 0) {
+      setShowCountdown(false);
       triggerRaffleDraw();
     }
   };
@@ -206,17 +243,43 @@ const RaffleRoom = () => {
 
     const handleRaffleDraw = (data: {
       raffleId: number;
-      ticketNumber: string;
-      userName: string;
+      ticketNumber?: string | number;
+      userName?: string;
+      userEmail?: string;
+      noTickets?: boolean;
+      message?: string;
     }) => {
       const raffleIdNum = Number(data.raffleId);
-      const raffle = raffles.find((r) => r.id === raffleIdNum);
 
-      if (raffle) {
-        setMovedRaffle(raffle);
-        setWinnerNumber(data.ticketNumber.toString());
-        setWinnerName(data.userName);
+      // 1️⃣ Actualizar rifas y reordenar
+      setRaffles((prevRaffles) => {
+        const updated = prevRaffles.map((r) =>
+          r.id === raffleIdNum ? { ...r, isDrawn: true } : r
+        );
+        return sortRaffles(updated);
+      });
+
+      // 2️⃣ Encontrar la rifa sorteada
+      const drawnRaffle = raffles.find((r) => r.id === raffleIdNum);
+      if (!drawnRaffle) return;
+
+      const hasTickets = !data.noTickets;
+
+      setMovedRaffle(drawnRaffle);
+      setRaffleHasTickets(hasTickets);
+
+      if (hasTickets) {
+        // 🏆 Caso: hay ganador
         setShowDraw(true);
+        setWinnerNumber(data.ticketNumber?.toString() ?? "");
+        setWinnerName(data.userName ?? "Ganador desconocido");
+      } else {
+        // ⚠️ Caso: no hubo tickets o sorteo incompleto
+        setWinnerNumber("");
+        setWinnerName(
+          data.message ??
+            "No se realizará el sorteo porque no se vendieron tickets."
+        );
       }
     };
 
@@ -230,7 +293,6 @@ const RaffleRoom = () => {
     if (!socket) return;
 
     socket.on("raffle:created", (raffle) => {
-      console.log("Nueva rifa creada:", raffle);
       setRaffles((prev) => [...prev, raffle]); // actualizar estado
     });
 
@@ -239,17 +301,32 @@ const RaffleRoom = () => {
     };
   }, [socket]);
 
+  //Si no hay tickets comprados, se muestra 1 segundo después de la animación de la rifa a sortear
+  useEffect(() => {
+    if (movedRaffle && !raffleHasTickets) {
+      const timer = setTimeout(() => {
+        setShowNoTicketsMessage(true);
+      }, 4000); // 2 segundo de retraso
+
+      return () => clearTimeout(timer);
+    } else {
+      setShowNoTicketsMessage(false);
+    }
+  }, [movedRaffle, raffleHasTickets]);
+
   // Cuando termina slot machine -> reiniciar hero
   useEffect(() => {
-    if (!showDraw) return;
+    if (!movedRaffle) return;
     const timer = setTimeout(() => {
       setShowDraw(false);
       setMovedRaffle(null);
       setWinnerNumber("");
       setWinnerName("");
-    }, 5 * 60 * 1000);
+      setShowCountdown(true);
+    }, 3 * 60 * 1000);
+
     return () => clearTimeout(timer);
-  }, [showDraw]);
+  }, [movedRaffle]);
 
   const upcomingRaffles = raffles.filter(
     (r) => new Date(r.endDate as string).getTime() > Date.now()
@@ -261,7 +338,7 @@ const RaffleRoom = () => {
     <div className={styles.container}>
       {/* HERO */}
       <section className={styles.hero} style={{ minHeight: "400px" }}>
-        {!movedRaffle && !showDraw && (
+        {(!movedRaffle && !showDraw) || showCountdown ? (
           <div style={{ textAlign: "center", padding: "2rem" }}>
             {upcomingRaffles.length > 0 ? (
               <NextRaffleCountdown
@@ -272,31 +349,49 @@ const RaffleRoom = () => {
               <p>Todas las rifas han sido sorteadas</p>
             )}
           </div>
-        )}
+        ) : null}
 
-        {movedRaffle && (
-          <HeroRaffle
-            raffle={movedRaffle}
-            onExit={() => {
-              setShowDraw(true);
-            }}
-            slotMachine={
-              showDraw ? (
-                <motion.div
-                  initial={{ y: -500, opacity: 0 }}
-                  animate={{ y: 0, opacity: 1 }}
-                  transition={{ type: "spring", stiffness: 120, damping: 12 }}
-                >
-                  <RaffleDrawUI
-                    raffle={movedRaffle}
-                    winnerNumber={winnerNumber.padStart(4, "0")}
-                    winnerName={winnerName}
-                  />
-                </motion.div>
-              ) : null
-            }
-          />
-        )}
+        {
+          movedRaffle && (
+            // (raffleHasTickets ? (
+            <HeroRaffle
+              raffle={movedRaffle}
+              onExit={() => {
+                setShowDraw(true);
+              }}
+              hasTickets={raffleHasTickets}
+              slotMachine={
+                showDraw
+                  ? winnerNumber && (
+                      <motion.div
+                        initial={{ y: -500, opacity: 0 }}
+                        animate={{ y: 0, opacity: 1 }}
+                        transition={{
+                          type: "spring",
+                          stiffness: 120,
+                          damping: 12,
+                        }}
+                      >
+                        <RaffleDrawUI
+                          raffle={movedRaffle}
+                          winnerNumber={winnerNumber.padStart(4, "0")}
+                          winnerName={winnerName}
+                        />
+                      </motion.div>
+                    )
+                  : showNoTicketsMessage && (
+                      <div className="no-tickets-message text-center mt-8">
+                        <p className="text-xl text-gray-700">{winnerName}</p>
+                      </div>
+                    )
+              }
+            />
+          )
+          // ) : (
+          //   <div className="no-tickets-message text-center mt-8">
+          //     <p className="text-xl text-gray-700">{winnerName}</p>
+          //   </div>
+        }
       </section>
 
       {/* Lista de rifas */}

@@ -23,7 +23,7 @@
 
 .imgBox {
   position: absolute;
-  top: 20%;
+  top: 25%;
   transform: translateY(-50%);
   z-index: 500;
   width: 100%;
@@ -92,7 +92,7 @@
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  margin-bottom: 1rem;
+  margin-bottom: 0.5rem;
 }
 
 .size h3,
@@ -175,7 +175,6 @@
 .outOfStock {
   display: inline-block;
   margin: 0 auto;
-
   text-decoration: none;
   background: #ccc;
   color: #333;
@@ -186,7 +185,12 @@
   min-width: max-content;
   padding: 10px 20px;
   transition: 0.3s;
-  cursor: default;
+}
+
+.outOfStock:hover {
+  scale: 1.05;
+  background-color: #00695c;
+  color: white;
 }
 
 .article::before {

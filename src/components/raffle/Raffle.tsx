@@ -95,7 +95,14 @@ export default function Raffle({
         ) : (
           isSale &&
           (raffle.availableAmount || 0) <= 0 && (
-            <p className={styles.outOfStock}>Agotado</p>
+            <Link
+              href={`/raffle/${raffle.id}/tickets${
+                ticketsInCart ? `?tickets=${ticketsInCart}` : ""
+              }`}
+              className={styles.outOfStock}
+            >
+              Agotado
+            </Link>
           )
         )}
       </section>
