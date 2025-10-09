@@ -22,7 +22,7 @@ export default function ThankYou() {
 
     const timer = setTimeout(() => {
       router.push("/");
-    }, 7000);
+    }, 10000);
 
     return () => clearTimeout(timer);
   }, [router]);
@@ -41,7 +41,7 @@ export default function ThankYou() {
         </p>
         <br />
         <p>
-          En tu perffil puedes ver tu historial de compra y rifas en las que
+          En tu perfil puedes ver tu historial de compra y rifas en las que
           participas
         </p>
         <p className={styles.redirect}>

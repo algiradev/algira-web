@@ -12,6 +12,7 @@ import { SocketProvider } from "@/providers/SocketProvider";
 import Footer from "@/components/footer/Footer";
 import ScrollToTop from "@/components/scroll-to-top/ScrollToTop";
 import ToTop from "@/components/to-top/ToTop";
+import { HighlightRaffleProvider } from "@/context/HighlightRaffleContext";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -44,14 +45,16 @@ export default function RootLayout({
         <SocketProvider>
           <AuthProvider>
             <CartProvider>
-              <NavbarWithCart />
-              <main className={styles.mainContent}>
-                <ScrollToTop />
-                <ToTop />
-                {children}
+              <HighlightRaffleProvider>
+                <NavbarWithCart />
+                <main className={styles.mainContent}>
+                  <ScrollToTop />
+                  <ToTop />
+                  {children}
 
-                <Footer />
-              </main>
+                  <Footer />
+                </main>
+              </HighlightRaffleProvider>
             </CartProvider>
           </AuthProvider>
         </SocketProvider>

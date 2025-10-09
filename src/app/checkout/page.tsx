@@ -110,7 +110,7 @@ export default function CheckoutPage() {
       if (data.success) {
         router.push("/thank-you");
         setOrderResult(true);
-        toast.success("Pago procesado correctamente ✅");
+        toast.success("Pago procesado correctamente");
         clearCart();
       } else {
         toast.error("Error: " + data.error);
