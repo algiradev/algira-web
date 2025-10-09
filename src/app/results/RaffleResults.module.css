@@ -1,11 +1,13 @@
 .profileTabs {
+  position: relative;
   width: 50%;
   background: #fff;
   border-radius: 12px;
   box-shadow: 0 5px 25px rgba(0, 0, 0, 0.1);
   padding: 1rem;
-  min-height: 100vh;
+  min-height: 80vh;
   margin: 5rem auto;
+  margin-top: 7rem;
 }
 
 .tabContent {
@@ -71,6 +73,41 @@
 }
 
 .purchaseTable tbody td {
+  color: black;
+}
+
+.highlighted {
+  border: 2px solid #00897d;
+  background-color: #e0f7f5;
+  transition: background-color 0.3s, border 0.3s;
+}
+
+.pagination {
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 1rem 0;
+  gap: 0.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: 1rem;
+}
+
+.pagination button {
+  padding: 0.5rem 1rem;
+  border: none;
+  background-color: var(--secundary-color);
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.pagination button.activePage {
+  background-color: var(--secundary-color);
+  color: #fff;
+}
+
+.pagination span {
   color: black;
 }
 
