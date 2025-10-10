@@ -1,6 +1,7 @@
 "use client";
+
 import { motion } from "framer-motion";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import styles from "./WinnerTicket.module.css";
 
 interface WinnerTicketProps {
@@ -17,23 +18,29 @@ export default function WinnerTicket({
   const [zIndex, setZIndex] = useState(-1);
 
   // Keyframes de Y (efecto impresora + rebote)
-  const yKeyframes = [
-    "-40%",
-    "-20%",
-    "0%",
-    "20%",
-    "40%",
-    "50%",
-    "70%",
-    "90%", // aquí cambiaremos zIndex
-    "100%",
-    "-20%", // vuelve al centro
-    "-25%", // rebote arriba
-    "-20%", // rebote final
-  ];
+  const yKeyframes = useMemo(
+    () => [
+      "-40%",
+      "-20%",
+      "0%",
+      "20%",
+      "40%",
+      "50%",
+      "70%",
+      "90%", // aquí cambiaremos zIndex
+      "100%",
+      "-20%",
+      "-25%",
+      "-20%",
+    ],
+    []
+  );
 
   // Distribución de tiempos para cada keyframe
-  const times = yKeyframes.map((_, i) => i / (yKeyframes.length - 1));
+  const times = useMemo(
+    () => yKeyframes.map((_, i) => i / (yKeyframes.length - 1)),
+    [yKeyframes]
+  );
 
   useEffect(() => {
     // Calculamos el tiempo en segundos hasta el keyframe 90%

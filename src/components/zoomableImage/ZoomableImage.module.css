@@ -55,10 +55,10 @@
 
 .zoomedImage {
   position: absolute;
-  top: 0;
-  left: 0;
-  width: auto; /* se sobrescribe por style */
-  height: auto;
+  object-fit: contain;
+  user-select: none;
+  pointer-events: none;
+  -webkit-user-drag: none;
 }
 
 /* Ajustes para móviles */

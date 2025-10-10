@@ -12,12 +12,7 @@ type Props = {
   winnerName?: string;
 };
 
-export default function RaffleDrawUI({
-  raffle,
-  countdown,
-  winnerNumber,
-  winnerName,
-}: Props) {
+export default function RaffleDrawUI({ winnerNumber, winnerName }: Props) {
   const [showTicket, setShowTicket] = useState(false);
   const [showWinnerTicket, setShowWinnerTicket] = useState(false);
   const [celebrate, setCelebrate] = useState(false);
