@@ -10,7 +10,7 @@ import {
 import { toast } from "react-toastify";
 
 const API_URL =
-  process.env.NEXT_PUBLIC_STRAPI_URL ?? "http://localhost:1337/api";
+  process.env.NEXT_PUBLIC_STRAPI_API_URL ?? "http://localhost:1337/api";
 
 export async function login(
   email: string,

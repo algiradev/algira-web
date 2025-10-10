@@ -7,7 +7,7 @@ export type AboutUsItem = {
 };
 
 const API_URL =
-  process.env.NEXT_PUBLIC_STRAPI_URL ?? "http://localhost:1337/api";
+  process.env.NEXT_PUBLIC_STRAPI_API_URL ?? "http://localhost:1337/api";
 
 export async function getAboutUs(): Promise<{ data: AboutUsItem[] }> {
   const res = await fetch(`${API_URL}/about-us`, { method: "GET" });
