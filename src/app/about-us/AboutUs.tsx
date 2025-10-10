@@ -6,7 +6,7 @@ import { AboutUsItem, getAboutUs } from "@/lib/api/about-us";
 import { Loader } from "lucide-react";
 
 const STRAPI_URL =
-  process.env.NEXT_PUBLIC_STRAPI_API_URL || "http://localhost:1337";
+  process.env.NEXT_PUBLIC_STRAPI_URL || "http://localhost:1337";
 
 export default function AboutUs() {
   const [aboutUs, setAboutUs] = useState<AboutUsItem[]>([]);
