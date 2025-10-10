@@ -16,12 +16,11 @@ export default function ConfirmEmailPage() {
   useEffect(() => {
     const confirm = async () => {
       try {
-        const res = await fetch(`${url}/confirm-email/${token}`);
+        const res = await fetch(`${url}/auth/confirm-email/${token}`);
         if (!res.ok) throw new Error("Error confirmando el correo");
 
         const data: MyApiLoginResponse = await res.json();
 
-        // Guardar sesión
         localStorage.setItem("accessToken", data.accessToken);
         localStorage.setItem("user", JSON.stringify(data.user));
 
