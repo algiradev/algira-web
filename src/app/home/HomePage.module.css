@@ -1,6 +1,8 @@
 .container {
   position: relative;
   width: 80%;
+  min-height: 80vh;
+  height: 100%;
   padding: 100px;
   display: flex;
   justify-content: space-between;
@@ -11,7 +13,7 @@
 .containerList {
   display: flex;
   justify-content: center;
-  align-items: start;
+  align-items: flex-start;
   width: 100%;
   background: var(--primary-color) url("/assets/svg/bg3.svg") center/cover;
   padding-top: 45px;

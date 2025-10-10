@@ -41,7 +41,7 @@ export default function Profile() {
   const [disabled, setDisabled] = useState<boolean>(false);
   const [invoices, setInvoices] = useState<MyInvoice[]>([]);
 
-  const { user, setUser, logout } = useAuth();
+  const { setUser, logout } = useAuth();
   const { clearCart } = useCart();
 
   const [countries, setCountries] = useState<MyApiCountry[]>([]);
@@ -93,6 +93,7 @@ export default function Profile() {
         setValue("countryId", userResponse.countryId || 0);
         setLoading(false);
       } catch (err) {
+        console.log(err);
         toast.error("Error al cargar datos del usuario.");
         router.push("/login");
       }

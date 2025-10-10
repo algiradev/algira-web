@@ -2,6 +2,7 @@
 
 import React, { useRef, useState } from "react";
 import styles from "./ZoomableImage.module.css";
+import Image from "next/image";
 
 type Props = {
   src: string;
@@ -99,10 +100,12 @@ export default function ZoomableImage({
         onMouseMove={handleMouseMove}
         onMouseLeave={handleMouseLeave}
       >
-        <img
+        <Image
           ref={imgRef}
           src={src}
           alt={alt}
+          fill
+          quality={100}
           className={styles.productImage}
           draggable={false}
         />
@@ -123,20 +126,18 @@ export default function ZoomableImage({
 
       {/* panel de zoom */}
       {isZooming && (
-        <div
-          ref={zoomRef}
-          className={styles.zoomContainer}
-          // style={{ width: `${zoomWidth}px`, height: `${zoomHeight}px` }}
-        >
-          <img
+        <div ref={zoomRef} className={styles.zoomContainer}>
+          <Image
             src={zoomSrc ?? src}
             alt={alt}
             className={styles.zoomedImage}
+            quality={100}
+            width={zoomImgStyle.width}
+            height={zoomImgStyle.height}
             style={{
+              position: "absolute",
               left: `${zoomImgStyle.left}px`,
               top: `${zoomImgStyle.top}px`,
-              width: `${zoomImgStyle.width}px`,
-              height: `${zoomImgStyle.height}px`,
             }}
             draggable={false}
           />

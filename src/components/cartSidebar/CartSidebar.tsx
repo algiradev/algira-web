@@ -5,6 +5,7 @@ import { X } from "lucide-react";
 import styles from "./CartSidebar.module.css";
 import { useRouter, usePathname, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
+import Image from "next/image";
 
 export default function CartSidebar() {
   const { cart, removeFromCart, isSidebarOpen, closeSidebar, clearCart } =
@@ -77,11 +78,15 @@ export default function CartSidebar() {
           ) : (
             cart.map((item) => (
               <div key={item.raffleId} className={styles.item}>
-                <img
-                  src={item.productImage}
-                  alt={item.title}
-                  className={styles.image}
-                />
+                <div className={styles.imageWrapper}>
+                  <Image
+                    src={item.productImage}
+                    alt={item.title}
+                    fill
+                    quality={100}
+                    className={styles.image}
+                  />
+                </div>
                 <div className={styles.info}>
                   <h3 className={styles.title}>{item.title}</h3>
                   <p className={styles.tickets}>

@@ -12,7 +12,6 @@ import "react-phone-number-input/style.css";
 
 import { signUp } from "@/lib/api/user";
 import Loader from "@/components/loader/Loader";
-import BackButton from "@/components/button/BackButton";
 import { signUpSchema, SignUpFormValues } from "@/lib/validation/signupSchema";
 
 import styles from "./Signup.module.css";

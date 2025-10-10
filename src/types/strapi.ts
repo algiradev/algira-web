@@ -7,7 +7,7 @@ export interface StrapiPostAttributes {
   publishedAt: string;
 }
 
-export interface APIResponseCollection<T extends string> {
+export interface APIResponseCollection<> {
   data: Array<{
     id: number;
     attributes: StrapiPostAttributes;
@@ -22,7 +22,7 @@ export interface APIResponseCollection<T extends string> {
   };
 }
 
-export interface APIResponseData<T extends string> {
+export interface APIResponseData<> {
   id: number;
   attributes: StrapiPostAttributes;
 }

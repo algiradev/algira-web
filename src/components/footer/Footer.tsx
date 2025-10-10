@@ -2,12 +2,7 @@
 
 import Link from "next/link";
 import styles from "./Footer.module.css";
-
-interface SocialNetwork {
-  img: string;
-  alt: string;
-  href: string;
-}
+import Image from "next/image";
 
 const socialNetworks = [
   {
@@ -82,7 +77,7 @@ export default function Footer() {
         <section className={styles.socialNetworks}>
           {socialNetworks.map((sn, i) => (
             <a key={i} className={styles.snLink} href={sn.href} target="_blank">
-              <img src={sn.img} alt={sn.alt} />
+              <Image src={sn.img} alt={sn.alt} width={30} height={30} />
             </a>
           ))}
         </section>

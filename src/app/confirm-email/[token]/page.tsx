@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import { toast } from "react-toastify";
 import Loader from "@/components/loader/Loader";
-import { MyApiLoginResponse } from "@/lib/api/user";
+import { MyApiLoginResponse } from "@/types/user";
 
 export default function ConfirmEmailPage() {
   const { token } = useParams<{ token: string }>();

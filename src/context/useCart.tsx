@@ -11,7 +11,6 @@ import {
 } from "react";
 import { MyTicket } from "@/types/ticket";
 import { io } from "socket.io-client";
-import { toast } from "react-toastify";
 
 export type CartItem = {
   raffleId: number;

@@ -79,12 +79,17 @@
   border-bottom: 1px solid #f0f0f0;
 }
 
-.image {
+.imageWrapper {
+  position: relative;
   width: 80px;
   height: 80px;
-  object-fit: cover;
-  border-radius: 8px;
   flex-shrink: 0;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.image {
+  object-fit: cover;
 }
 
 .info {

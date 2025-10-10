@@ -8,7 +8,6 @@ import { useCart } from "@/context/useCart";
 import { MyRaffle } from "@/types/raffle";
 import { useSocket } from "@/providers/SocketProvider";
 import { useEffect, useState } from "react";
-import { toast } from "react-toastify";
 
 export interface Ticket {
   id: number;

@@ -1,13 +1,13 @@
 "use client";
 
 import { Suspense } from "react";
-import AboutUs from "./AboutUs";
 import Loader from "@/components/loader/Loader";
+import CartSidebar from "./CartSidebar";
 
-export default function AboutUsPage() {
+export default function CartSidebarWrapper() {
   return (
     <Suspense fallback={<Loader />}>
-      <AboutUs />
+      <CartSidebar />
     </Suspense>
   );
 }
