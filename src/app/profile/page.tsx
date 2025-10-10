@@ -31,7 +31,7 @@ import { getCountries } from "@/lib/api/country";
 import { MyApiCountry } from "@/types/country";
 
 const STRAPI_URL =
-  process.env.NEXT_PUBLIC_STRAPI_URL || "http://localhost:1337";
+  process.env.NEXT_PUBLIC_STRAPI_API_URL || "http://localhost:1337";
 
 export default function Profile() {
   const inputImage = useRef<HTMLInputElement>(null);

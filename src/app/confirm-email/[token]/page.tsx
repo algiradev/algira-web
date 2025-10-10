@@ -11,7 +11,7 @@ export default function ConfirmEmailPage() {
   const router = useRouter();
   const [loading, setLoading] = useState(true);
   const url =
-    process.env.NEXT_PUBLIC_STRAPI_URL || "http://localhost:1337/api/auth";
+    process.env.NEXT_PUBLIC_STRAPI_API_URL || "http://localhost:1337/api/auth";
 
   useEffect(() => {
     const confirm = async () => {

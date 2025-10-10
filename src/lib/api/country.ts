@@ -1,7 +1,7 @@
 import { MyApiCountry } from "@/types/country";
 
 const API_URL =
-  process.env.NEXT_PUBLIC_STRAPI_URL ?? "http://localhost:1337/api";
+  process.env.NEXT_PUBLIC_STRAPI_API_URL ?? "http://localhost:1337/api";
 
 export async function getCountries(): Promise<{ data: MyApiCountry[] }> {
   const res = await fetch(`${API_URL}/countries/all`, { method: "GET" });
