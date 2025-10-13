@@ -24,9 +24,6 @@ type Props = {
   raffle: MyRaffle;
 };
 
-const STRAPI_URL =
-  process.env.NEXT_PUBLIC_STRAPI_URL || "http://localhost:1337";
-
 const RaffleDetail = ({ raffle }: Props) => {
   const [index, setIndex] = useState<number>(0);
   const [open, setOpen] = useState<boolean>(false);
@@ -54,8 +51,8 @@ const RaffleDetail = ({ raffle }: Props) => {
         <div className={styles.raffleInfo}>
           <div className={styles.raffleFigure} onClick={() => setOpen(true)}>
             <ZoomableImage
-              zoomSrc={STRAPI_URL + raffle.product.image?.[0] || "/algira.svg"}
-              src={STRAPI_URL + raffle.product.image?.[0] || "/algira.svg"}
+              zoomSrc={raffle.product.image?.[0] || "/algira.svg"}
+              src={raffle.product.image?.[0] || "/algira.svg"}
               alt={raffle.product.title}
             />
           </div>
@@ -65,7 +62,7 @@ const RaffleDetail = ({ raffle }: Props) => {
             index={index}
             close={() => setOpen(false)}
             slides={(raffle.product.image ?? []).map((img) => ({
-              src: STRAPI_URL + img || "/algira.svg",
+              src: img || "/algira.svg",
             }))}
             plugins={[Thumbnails, Zoom]}
             styles={{

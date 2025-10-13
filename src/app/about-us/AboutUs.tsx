@@ -5,9 +5,6 @@ import styles from "./AboutUs.module.css";
 import { AboutUsItem, getAboutUs } from "@/lib/api/about-us";
 import { Loader } from "lucide-react";
 
-const STRAPI_URL =
-  process.env.NEXT_PUBLIC_STRAPI_URL || "http://localhost:1337";
-
 export default function AboutUs() {
   const [aboutUs, setAboutUs] = useState<AboutUsItem[]>([]);
   const [loading, setLoading] = useState(true);
@@ -36,7 +33,7 @@ export default function AboutUs() {
           <div
             key={section.id}
             className={`${styles.clip} ${styles[`clip${index + 1}`]}`}
-            style={{ backgroundImage: `url(${STRAPI_URL}${section.img})` }}
+            style={{ backgroundImage: `url(${section.img})` }}
           >
             <h2
               className={`${styles.clipTitle} ${styles[`clipTitle-${index}`]}`}

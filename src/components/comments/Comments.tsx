@@ -11,9 +11,6 @@ import { useEffect, useState } from "react";
 import { CommentItem, getComments } from "@/lib/api/comment";
 import Loader from "../loader/Loader";
 
-const STRAPI_URL =
-  process.env.NEXT_PUBLIC_STRAPI_URL || "http://localhost:1337";
-
 export default function Comments() {
   const [comments, setComments] = useState<CommentItem[]>([]);
   const [loading, setLoading] = useState(true);
@@ -55,7 +52,7 @@ export default function Comments() {
             <div className={styles.card}>
               {c.img && (
                 <Image
-                  src={`${STRAPI_URL}${c.img}`}
+                  src={`${c.img}`}
                   alt={c.name}
                   width={80}
                   height={80}
