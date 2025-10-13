@@ -9,7 +9,6 @@ import styles from "./Checkout.module.css";
 import { generateClientToken, processPayment } from "@/lib/api/braintree";
 import dropin from "braintree-web-drop-in";
 import { toast } from "react-toastify";
-import Loader from "@/components/loader/Loader";
 
 export default function CheckoutPage() {
   const { user } = useAuth();
@@ -110,6 +109,7 @@ export default function CheckoutPage() {
       if (data.success) {
         router.push("/thank-you");
         setOrderResult(true);
+        setLoading(false);
         toast.success("Pago procesado correctamente");
         clearCart();
       } else {
@@ -122,8 +122,6 @@ export default function CheckoutPage() {
       setLoading(false);
     }
   };
-
-  if (loading) <Loader />;
 
   return (
     <div className={styles.wrapper}>

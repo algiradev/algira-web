@@ -11,9 +11,6 @@ import { getSlides, SliderItem } from "@/lib/api/slider";
 import Image from "next/image";
 import Loader from "../loader/Loader";
 
-const STRAPI_URL =
-  process.env.NEXT_PUBLIC_STRAPI_URL || "http://localhost:1337";
-
 export default function Slider() {
   const [slides, setSlides] = useState<SliderItem[]>([]);
   const [loading, setLoading] = useState(true);
@@ -62,7 +59,7 @@ export default function Slider() {
             <SwiperSlide key={slide.id}>
               <div className={styles.slide}>
                 <Image
-                  src={`${STRAPI_URL}${imageToShow!}`}
+                  src={imageToShow!}
                   alt={slide.alt}
                   width={1200}
                   height={600}
