@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useRef, useState } from "react";
 import styles from "./FeedbackForm.module.css";
 import { sendContact } from "@/lib/api/contact";
 import { feedbackSchema } from "@/lib/validation/contactFormSchem";
@@ -18,6 +18,7 @@ export default function FeedbackForm() {
   const [fieldErrors, setFieldErrors] = useState<
     Partial<Record<keyof FeedbackPayload, string>>
   >({});
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -51,9 +52,13 @@ export default function FeedbackForm() {
     setFieldErrors({});
 
     try {
+      console.log(form);
       await sendContact({ type: "feedback", ...form });
       setSuccess("¡Enviado con éxito!");
       setForm({ email: "", message: "", image: null });
+      if (fileInputRef.current) {
+        fileInputRef.current.value = "";
+      }
     } catch (err: unknown) {
       const message =
         err instanceof Error ? err.message : "No se pudo enviar el formulario";
@@ -111,8 +116,10 @@ export default function FeedbackForm() {
         <input
           type="file"
           id="image"
+          name="image"
           accept="image/*"
           onChange={handleFileChange}
+          ref={fileInputRef}
           className={styles.inputFile}
         />
         {fieldErrors.image && (
