@@ -29,7 +29,7 @@ const BackButton = ({ className, onClick, children }: BackButtonProps) => {
           fontSize: "20px",
         }}
       />
-      {children || "Volver"}
+      {children || "Atrás"}
     </button>
   );
 };

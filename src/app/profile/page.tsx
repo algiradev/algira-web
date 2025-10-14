@@ -30,9 +30,6 @@ import { Camera } from "lucide-react";
 import { getCountries } from "@/lib/api/country";
 import { MyApiCountry } from "@/types/country";
 
-const STRAPI_URL =
-  process.env.NEXT_PUBLIC_STRAPI_URL || "http://localhost:1337";
-
 export default function Profile() {
   const inputImage = useRef<HTMLInputElement>(null);
   const [userProfile, setUserProfile] = useState<MyApiUser | null>(null);
@@ -225,7 +222,7 @@ export default function Profile() {
                 <Image
                   src={
                     userProfile.avatar?.url
-                      ? `${STRAPI_URL}${userProfile.avatar?.url}`
+                      ? `${userProfile.avatar?.url}`
                       : "/algira.svg"
                   }
                   width={150}

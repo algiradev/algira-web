@@ -24,9 +24,6 @@ type NavOption = {
   href: string;
 };
 
-const STRAPI_URL =
-  process.env.NEXT_PUBLIC_STRAPI_URL || "http://localhost:1337";
-
 export const AlgiraLogo = () => {
   return (
     <Image
@@ -77,7 +74,7 @@ const UserDropdown = ({
       <button className={styles.userButton} onClick={onToggle}>
         {user.avatar ? (
           <Image
-            src={`${STRAPI_URL}${user.avatar?.url}`}
+            src={`${user.avatar?.url}`}
             alt={user.username}
             className={styles.avatar}
             width={32}
