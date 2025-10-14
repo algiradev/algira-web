@@ -114,7 +114,6 @@ export default function Profile() {
 
         setUserProfile(updatedUser);
         setUser(updatedUser);
-        console.log("image", updatedUser);
         localStorage.setItem("user", JSON.stringify(updatedUser));
 
         toast.success("Imagen de perfil actualizada.");

@@ -2,9 +2,9 @@
   max-width: 500px;
   margin: 2rem auto;
   padding: 2rem;
-  background: linear-gradient(145deg, #ffffff, #f0f0f0);
+  background: transparent;
   border-radius: 1rem;
-  border: 1px solid var(--secundary-color);
+  border: 1px solid var(--primary-color);
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
   color: var(--foreground);
   font-family: "Arial", sans-serif;
@@ -18,7 +18,7 @@
 .title {
   text-align: center;
   font-size: 1.8rem;
-  color: var(--secundary-color);
+  color: white;
   margin-bottom: 1.5rem;
   font-weight: bold;
 }
@@ -32,14 +32,14 @@
 .label {
   margin-bottom: 0.4rem;
   font-weight: 600;
-  color: var(--secundary-color);
+  color: white;
 }
 
 .input,
 .textarea {
   padding: 0.8rem;
   border-radius: 0.6rem;
-  border: 1px solid #00796b;
+  border: 1px solid var(--primary-color);
   background-color: white;
   color: black;
   font-size: 1rem;
@@ -48,9 +48,9 @@
 
 .input:focus,
 .textarea:focus {
-  outline: none;
+  /* outline: none; */
   border-color: var(--secundary-color);
-  box-shadow: 0 0 8px rgba(0, 137, 125, 0.3);
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.411);
 }
 
 .textarea {
@@ -64,7 +64,7 @@
   font-size: 1.1rem;
   font-weight: bold;
   color: #fff;
-  background: var(--secundary-color);
+  background: var(--primary-color);
   border: none;
   border-radius: 0.7rem;
   cursor: pointer;
@@ -72,7 +72,8 @@
 }
 
 .submit:hover {
-  background: var(--secundary-color);
+  background: white;
+  color: var(--primary-color);
   transform: translateY(-2px);
 }
 
@@ -85,7 +86,7 @@
 }
 
 .success {
-  color: #2e7d32;
+  color: white;
   font-weight: 600;
   margin-bottom: 0.5rem;
 }
