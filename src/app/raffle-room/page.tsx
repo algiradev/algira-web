@@ -31,7 +31,7 @@ function HeroRaffle({
 
   useEffect(() => {
     if (phase === "enter") {
-      const t = setTimeout(() => setPhase("right"), 1000);
+      const t = setTimeout(() => setPhase("right"), 2000);
       return () => clearTimeout(t);
     }
   }, [phase]);
@@ -62,9 +62,10 @@ function HeroRaffle({
         transition={{ type: "spring", stiffness: 100, damping: 15 }}
         onAnimationComplete={() => {
           if (phase === "right") {
-            setInterval(() => {
+            const time = setTimeout(() => {
               onExit();
             }, 500);
+            return () => clearTimeout(time);
           }
         }}
         style={{ pointerEvents: "none" }}
@@ -251,13 +252,7 @@ const RaffleRoom = () => {
     }) => {
       const raffleIdNum = Number(data.raffleId);
 
-      // 1️⃣ Actualizar rifas y reordenar
-      setRaffles((prevRaffles) => {
-        const updated = prevRaffles.map((r) =>
-          r.id === raffleIdNum ? { ...r, isDrawn: true } : r
-        );
-        return sortRaffles(updated);
-      });
+      setRaffles((prev) => prev.slice(1));
 
       // 2️⃣ Encontrar la rifa sorteada
       const drawnRaffle = raffles.find((r) => r.id === raffleIdNum);
@@ -351,47 +346,41 @@ const RaffleRoom = () => {
           </div>
         ) : null}
 
-        {
-          movedRaffle && (
-            // (raffleHasTickets ? (
-            <HeroRaffle
-              raffle={movedRaffle}
-              onExit={() => {
-                setShowDraw(true);
-              }}
-              hasTickets={raffleHasTickets}
-              slotMachine={
-                showDraw
-                  ? winnerNumber && (
-                      <motion.div
-                        initial={{ y: -500, opacity: 0 }}
-                        animate={{ y: 0, opacity: 1 }}
-                        transition={{
-                          type: "spring",
-                          stiffness: 120,
-                          damping: 12,
-                        }}
-                      >
-                        <RaffleDrawUI
-                          raffle={movedRaffle}
-                          winnerNumber={winnerNumber.padStart(4, "0")}
-                          winnerName={winnerName}
-                        />
-                      </motion.div>
-                    )
-                  : showNoTicketsMessage && (
-                      <div className="no-tickets-message text-center mt-8">
-                        <p className="text-xl text-gray-700">{winnerName}</p>
-                      </div>
-                    )
-              }
-            />
-          )
-          // ) : (
-          //   <div className="no-tickets-message text-center mt-8">
-          //     <p className="text-xl text-gray-700">{winnerName}</p>
-          //   </div>
-        }
+        {movedRaffle && (
+          // (raffleHasTickets ? (
+          <HeroRaffle
+            raffle={movedRaffle}
+            onExit={() => {
+              setShowDraw(true);
+            }}
+            hasTickets={raffleHasTickets}
+            slotMachine={
+              showDraw
+                ? winnerNumber && (
+                    <motion.div
+                      initial={{ y: -500, opacity: 0 }}
+                      animate={{ y: 0, opacity: 1 }}
+                      transition={{
+                        type: "spring",
+                        stiffness: 120,
+                        damping: 12,
+                      }}
+                    >
+                      <RaffleDrawUI
+                        raffle={movedRaffle}
+                        winnerNumber={winnerNumber.padStart(4, "0")}
+                        winnerName={winnerName}
+                      />
+                    </motion.div>
+                  )
+                : showNoTicketsMessage && (
+                    <div className="no-tickets-message text-center mt-8">
+                      <p className="text-xl text-gray-700">{winnerName}</p>
+                    </div>
+                  )
+            }
+          />
+        )}
       </section>
 
       {/* Lista de rifas */}

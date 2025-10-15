@@ -11,6 +11,36 @@ import { useSocket } from "@/providers/SocketProvider";
 const STRAPI_URL =
   process.env.NEXT_PUBLIC_STRAPI_URL || "http://localhost:1337";
 
+const sortRaffles = (rafflesList: MyRaffle[]) => {
+  return [...rafflesList].sort((a, b) => {
+    // 1️⃣ No sorteadas primero
+    if (a.isDrawn !== b.isDrawn) {
+      return a.isDrawn ? 1 : -1;
+    }
+
+    const aTime = new Date(a.endDate ?? 0).getTime();
+    const bTime = new Date(b.endDate ?? 0).getTime();
+
+    // 2️⃣ Si ambas NO están sorteadas → más próxima primero
+    if (!a.isDrawn && !b.isDrawn) {
+      if (isNaN(aTime) && isNaN(bTime)) return 0;
+      if (isNaN(aTime)) return 1;
+      if (isNaN(bTime)) return -1;
+      return aTime - bTime; // ascendente
+    }
+
+    // 3️⃣ Si ambas están sorteadas → más reciente primero
+    if (a.isDrawn && b.isDrawn) {
+      if (isNaN(aTime) && isNaN(bTime)) return 0;
+      if (isNaN(aTime)) return 1;
+      if (isNaN(bTime)) return -1;
+      return bTime - aTime; // descendente
+    }
+
+    return 0;
+  });
+};
+
 const HomePage = () => {
   const [raffles, setRaffles] = useState<MyRaffle[]>([]);
   const [loading, setLoading] = useState(true);
@@ -22,7 +52,9 @@ const HomePage = () => {
     const fetchRaffles = async () => {
       try {
         const data = await getRaffles();
-        setRaffles(data);
+
+        const sortedRaffles = sortRaffles(data);
+        setRaffles(sortedRaffles);
       } catch (err) {
         console.error(err);
       } finally {
@@ -45,9 +77,12 @@ const HomePage = () => {
       raffleId: number;
       availableAmount: number;
     }) => {
-      setRaffles((prev) =>
-        prev.map((r) => (r.id === raffleId ? { ...r, availableAmount } : r))
-      );
+      setRaffles((prev) => {
+        const updated = prev.map((r) =>
+          r.id === raffleId ? { ...r, availableAmount } : r
+        );
+        return sortRaffles(updated);
+      });
     };
 
     socket.on("raffle:update", handleRaffleUpdate);
