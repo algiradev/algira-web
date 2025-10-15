@@ -16,7 +16,7 @@ export async function sendContact(data: UnifiedPayload) {
     if (data.email) formData.append("email", data.email);
     formData.append("image", data.image);
 
-    const res = await fetch(`${API_URL}/contacts`, {
+    const res = await fetch(`${API_URL}/suggestions`, {
       method: "POST",
       body: formData,
     });
@@ -26,7 +26,7 @@ export async function sendContact(data: UnifiedPayload) {
     return json;
   }
 
-  const res = await fetch(`${API_URL}/contacts`, {
+  const res = await fetch(`${API_URL}/suggestions`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(data),

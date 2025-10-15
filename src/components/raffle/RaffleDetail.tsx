@@ -19,6 +19,7 @@ import "yet-another-react-lightbox/plugins/captions.css";
 import styles from "./RaffleDetail.module.css";
 import Link from "next/link";
 import { useCart } from "@/context/useCart";
+import ProductSlider from "../product-slider/ProductSlider";
 
 type Props = {
   raffle: MyRaffle;
@@ -27,6 +28,9 @@ type Props = {
 const RaffleDetail = ({ raffle }: Props) => {
   const [index, setIndex] = useState<number>(0);
   const [open, setOpen] = useState<boolean>(false);
+  const [selectedImage, setSelectedImage] = useState<string>(
+    raffle.product.image?.[0] || "/algira.svg"
+  );
 
   const { cart } = useCart();
 
@@ -51,8 +55,8 @@ const RaffleDetail = ({ raffle }: Props) => {
         <div className={styles.raffleInfo}>
           <div className={styles.raffleFigure} onClick={() => setOpen(true)}>
             <ZoomableImage
-              zoomSrc={raffle.product.image?.[0] || "/algira.svg"}
-              src={raffle.product.image?.[0] || "/algira.svg"}
+              zoomSrc={selectedImage}
+              src={selectedImage}
               alt={raffle.product.title}
             />
           </div>
@@ -130,6 +134,13 @@ const RaffleDetail = ({ raffle }: Props) => {
             </Button>
           )}
         </section>
+        <div className={styles.slider}>
+          <ProductSlider
+            images={raffle.product.image ?? ["/algira.svg"]}
+            alt={raffle.product.title}
+            onSelect={setSelectedImage}
+          />
+        </div>
       </div>
     </section>
   );

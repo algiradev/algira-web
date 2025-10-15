@@ -3,31 +3,49 @@
 import Link from "next/link";
 import styles from "./Footer.module.css";
 import Image from "next/image";
-
-const socialNetworks = [
-  {
-    img: "/svg/instagram.svg",
-    alt: "Instagram",
-    href: "https://instagram.com",
-  },
-  {
-    img: "/svg/whatsapp.svg",
-    alt: "Facebook",
-    href: "https://facebook.com",
-  },
-  {
-    img: "/svg/facebook.svg",
-    alt: "Facebook",
-    href: "https://facebook.com",
-  },
-  {
-    img: "/svg/tik-tok.svg",
-    alt: "Facebook",
-    href: "https://tik-tok.com",
-  },
-];
+import Loader from "../loader/Loader";
+import { useEffect, useState } from "react";
+import { getFooterContact, getFooterSocialNetworks } from "@/lib/api/footer";
+import { FooterContact, FooterSocialNetwork } from "@/types/footer";
 
 export default function Footer() {
+  const [socialNetworks, setSocialNetworks] = useState<FooterSocialNetwork[]>(
+    []
+  );
+  const [contacts, setContacts] = useState<FooterContact | null>(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    async function fetchNetworks() {
+      try {
+        const data = await getFooterSocialNetworks();
+        setSocialNetworks(data);
+      } catch (err) {
+        console.error("Error fetching footer social networks:", err);
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    fetchNetworks();
+  }, []);
+
+  useEffect(() => {
+    async function fetchContacts() {
+      try {
+        const { data } = await getFooterContact();
+        setContacts(data);
+      } catch (err) {
+        console.error("Error fetching footer contacts:", err);
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    fetchContacts();
+  }, []);
+
+  if (loading) return <Loader />;
   return (
     <footer className={styles.footer}>
       <div className={styles.grid}>
@@ -67,8 +85,8 @@ export default function Footer() {
         <section className={styles.col}>
           <h2 className={styles.h2}>Contacto</h2>
           <ul className={styles.ul}>
-            <li>Email: contacto@algira.com</li>
-            <li>Teléfono: 097108878</li>
+            <li>Email: {contacts?.email}</li>
+            <li>Teléfono: {contacts?.phone}</li>
           </ul>
         </section>
       </div>
@@ -76,8 +94,18 @@ export default function Footer() {
       <div className={`${styles.snWrapper}`}>
         <section className={styles.socialNetworks}>
           {socialNetworks.map((sn, i) => (
-            <a key={i} className={styles.snLink} href={sn.href} target="_blank">
-              <Image src={sn.img} alt={sn.alt} width={30} height={30} />
+            <a
+              key={i}
+              className={styles.snLink}
+              href={sn.url || "/"}
+              target="_blank"
+            >
+              <Image
+                src={sn.icon}
+                alt={sn.alt || "icon"}
+                width={30}
+                height={30}
+              />
             </a>
           ))}
         </section>
