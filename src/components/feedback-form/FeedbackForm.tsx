@@ -2,7 +2,7 @@
 
 import { useRef, useState } from "react";
 import styles from "./FeedbackForm.module.css";
-import { sendContact } from "@/lib/api/contact";
+import { sendContact } from "@/lib/api/suggestion";
 import { feedbackSchema } from "@/lib/validation/contactFormSchem";
 import { FeedbackPayload } from "@/types/feedback";
 

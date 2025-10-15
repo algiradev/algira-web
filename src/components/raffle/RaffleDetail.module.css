@@ -163,6 +163,10 @@
   color: #4f4f4f;
 }
 
+.slider {
+  width: fit-content;
+}
+
 /* Media Queries */
 @media (max-width: 576px) {
   .raffleDetails {

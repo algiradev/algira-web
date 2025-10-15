@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import styles from "./ContactForm.module.css";
-import { sendContact } from "@/lib/api/contact";
+import { sendContact } from "@/lib/api/suggestion";
 import { contactSchema } from "@/lib/validation/contactFormSchem";
 import { ContactPayload } from "@/types/contact";
 
