@@ -474,7 +474,9 @@ const RaffleRoom = () => {
 
       {/* Lista de rifas */}
       <section className={styles.raffleList}>
-        <h2 className={styles.raffleListTitle}>Próximas rifas</h2>
+        {upcomingRaffles.length > 0 && (
+          <h2 className={styles.raffleListTitle}>Próximas rifas</h2>
+        )}
         <div className={styles.rafflesGrid}>
           <AnimatePresence>
             {raffles
