@@ -1,7 +1,7 @@
 .raffle {
   min-height: 85vh;
   width: 100%;
-  height: 100vh;
+  /* height: 100vh; */
   background: #00897e7c;
   background: linear-gradient(
     350deg,
@@ -9,6 +9,7 @@
     rgba(255, 255, 255, 1) 25%
   );
   margin-top: 60px;
+  padding-bottom: 2rem;
 }
 
 .backButtonWrapper {
@@ -164,7 +165,9 @@
 }
 
 .slider {
-  width: fit-content;
+  width: 100%;
+  max-width: 100%;
+  align-self: center;
 }
 
 /* Media Queries */

@@ -3,12 +3,12 @@
   flex-direction: column;
   justify-content: space-between;
   /* min-height: 50vh; */
-  border-top: 2px solid var(--bg-white);
+  border-top: 5px solid var(--secundary-color);
   background-color: var(--primary-color);
   color: var(--color-text);
-  animation: 4s infinite glow;
   padding: 1rem;
   padding-top: 2rem;
+  margin-top: 5px;
 }
 
 /* GRID SYSTEM */
@@ -98,7 +98,7 @@
 }
 
 /* Animación borde */
-@keyframes glow {
+/* @keyframes glow {
   0% {
     border-color: #b2dbd8;
   }
@@ -111,7 +111,7 @@
   100% {
     border-color: var(--secundary-color);
   }
-}
+} */
 
 /* 📱 Responsive */
 @media (max-width: 768px) {
