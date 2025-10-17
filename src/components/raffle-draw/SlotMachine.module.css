@@ -2,10 +2,10 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  background: linear-gradient(145deg, #222, #111);
+  background: linear-gradient(145deg, #eec305, #f2de04);
   padding: 2rem;
   border-radius: 25px;
-  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 20px 50px #f2de047b;
   position: relative;
   width: 400px;
   height: 300px;
@@ -15,10 +15,24 @@
   display: flex;
   gap: 1rem;
   background: #333;
+  background-color: rgba(255, 0, 0, 0.777);
   padding: 1rem;
   border-radius: 15px;
   overflow: hidden;
   perspective: 800px;
+}
+
+.imageContainer {
+  position: relative;
+  top: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100px;
+  height: 100px;
+  background: #00897ed7;
+  border-radius: 25%;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2) inset;
 }
 
 .reel {
@@ -42,8 +56,8 @@
   align-items: center;
   font-size: 48px;
   font-weight: bold;
-  color: #0ff;
-  text-shadow: 0 0 5px #0ff, 0 0 10px #0ff;
+  color: yellow;
+  text-shadow: 0 0 5px yellow, 0 0 10px yellow;
 }
 
 .lever {
@@ -52,7 +66,7 @@
   top: 50px;
   width: 20px;
   height: 150px;
-  background: #666;
+  background: rgb(243, 226, 226);
   border-radius: 10px;
   transform-origin: top left;
   cursor: pointer;

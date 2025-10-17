@@ -132,7 +132,7 @@ export default function TicketsClient({ raffle }: TicketsClientProps) {
     const fetchTakenTickets = async () => {
       try {
         const taken = await getPurchasedTickets(raffle.id ?? 0);
-        setTakenTickets(taken);
+        setTakenTickets(taken.map((n) => Number(n)));
       } catch (err) {
         console.error("Error fetching taken tickets:", err);
       }

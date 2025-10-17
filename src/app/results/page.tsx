@@ -13,7 +13,7 @@ export default function ResultsPage() {
   const [results, setResults] = useState<RaffleWinnerResult[]>([]);
   const [loading, setLoading] = useState(true);
   const [page, setPage] = useState(1);
-  const itemsPerPage = 5; // rifas por página
+  const itemsPerPage = 5;
   const raffleRefs = useRef<Record<number, HTMLDivElement | null>>({});
 
   useEffect(() => {

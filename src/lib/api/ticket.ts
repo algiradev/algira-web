@@ -1,7 +1,7 @@
 export type Ticket = {
   id: number;
   number: string;
-  status_ticket: "a" | "i"; // activo o inactivo
+  status_ticket: "a" | "i";
   raffle: {
     id: number;
     name: string;
