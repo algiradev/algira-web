@@ -19,20 +19,7 @@ export default function WinnerTicket({
 
   // Keyframes de Y (efecto impresora + rebote)
   const yKeyframes = useMemo(
-    () => [
-      "-40%",
-      "-20%",
-      "0%",
-      "20%",
-      "40%",
-      "50%",
-      "70%",
-      "90%", // aquí cambiaremos zIndex
-      "100%",
-      "-20%",
-      "-25%",
-      "-20%",
-    ],
+    () => ["75%", "110%", "140%", "180%", "185%", "0%", "-15%", "0%"],
     []
   );
 
@@ -45,7 +32,7 @@ export default function WinnerTicket({
   useEffect(() => {
     // Calculamos el tiempo en segundos hasta el keyframe 90%
     const durationPerKeyframe = 0.3; // 0.3s por keyframe
-    const keyframeIndexForZ = yKeyframes.findIndex((y) => y === "100%");
+    const keyframeIndexForZ = yKeyframes.findIndex((y) => y === "185%");
     const timeUntilZ = delay / 1000 + durationPerKeyframe * keyframeIndexForZ;
 
     const timer = setTimeout(() => setZIndex(1), timeUntilZ * 1000);
@@ -56,14 +43,14 @@ export default function WinnerTicket({
     <motion.div
       className={styles.ticketWrapper}
       style={{
-        width: 150,
-        height: 200,
         position: "absolute",
         top: "40%",
         left: "50%",
         x: "-50%",
-        zIndex: zIndex,
         overflow: "hidden",
+        height: 100,
+        width: 250,
+        zIndex,
       }}
       initial={{ y: yKeyframes[0] }}
       animate={{ y: yKeyframes }}

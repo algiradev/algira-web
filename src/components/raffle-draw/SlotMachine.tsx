@@ -2,10 +2,11 @@
 import { useRef, useState, useEffect } from "react";
 import { gsap } from "gsap";
 import styles from "./SlotMachine.module.css";
+import Image from "next/image";
 
 interface SlotMachineProps {
-  winningNumber: string; // "042" recibido desde la BD
-  onFinished?: () => void; // función para llamar la animación del ticket
+  winningNumber: string;
+  onFinished?: () => void;
 }
 
 export default function SlotMachine({
@@ -51,10 +52,10 @@ export default function SlotMachine({
           onComplete: () => {
             if (i === 3) {
               setIsSpinning(false);
-              // Espera 3 segundos y luego ejecuta la animación del ticket
+
               setTimeout(() => {
                 if (typeof onFinished === "function") {
-                  onFinished(); // llamar a la animación del ticket
+                  onFinished();
                 }
               }, 0);
             }
@@ -87,6 +88,9 @@ export default function SlotMachine({
             </div>
           </div>
         ))}
+      </div>
+      <div className={styles.imageContainer}>
+        <Image alt="Algira Logo" src="/algira.svg" width={100} height={100} />
       </div>
 
       {/* Palanca */}

@@ -6,6 +6,7 @@
   box-shadow: 0 5px 25px rgba(0, 0, 0, 0.1);
   padding: 1rem;
   min-height: 80vh;
+  height: 100%;
   margin: 5rem auto;
   margin-top: 7rem;
 }
@@ -117,26 +118,27 @@
   }
 }
 
-@media (max-width: 850px) {
+@media (max-width: 900px) {
   .profileTabs {
     width: 80%;
-  }
-}
-
-@media (max-width: 750px) {
-  .profileTabs {
-    width: 80%;
+    min-height: auto;
+    height: auto;
+    padding-bottom: 6rem;
   }
 
-  .purchaseTable th,
-  .purchaseTable td,
-  .raffleCard p {
-    font-size: 0.8rem;
+  .scrollWrapper {
+    overflow-y: visible;
   }
 }
 
 @media (max-width: 750px) {
   .profileTabs {
     width: 90%;
+  }
+
+  .purchaseTable th,
+  .purchaseTable td,
+  .raffleCard p {
+    font-size: 0.8rem;
   }
 }
