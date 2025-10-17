@@ -1,5 +1,5 @@
 .sliderWrapper {
-  width: 100%;
+  /* width: 100%; */
   display: flex;
   flex-direction: column;
   gap: 10px;
@@ -7,30 +7,91 @@
 }
 
 .imageList {
-  display: flex;
-  overflow-x: auto;
-  gap: 10px;
-  padding-bottom: 5px;
-  scrollbar-width: thin;
-}
-
-.imageList::-webkit-scrollbar {
-  height: 6px;
-}
-
-.imageList::-webkit-scrollbar-thumb {
-  background: #ccc;
-  border-radius: 3px;
+  width: 45%;
+  padding: 0 2rem;
+  padding-bottom: 1rem;
+  box-sizing: border-box;
 }
 
 .imageItem {
-  flex: 0 0 auto;
   cursor: pointer;
   border-radius: 6px;
   transition: transform 0.2s ease;
+  width: 120px;
+  height: 130px;
+  overflow: hidden;
+  padding: 1rem 0;
 }
 
 .imageThumb {
   border-radius: 6px;
-  object-fit: cover;
+  object-fit: contain;
+  width: 100%;
+  height: 100%;
+}
+
+.swiper-button-next,
+.swiper-button-prev {
+  color: #333;
+  width: 30px;
+  height: 30px;
+}
+
+.swiper-pagination-bullet {
+  background: #ccc;
+  opacity: 1;
+}
+
+.swiper-pagination-bullet-active {
+  background: #007bff;
+}
+
+.imageItem:hover {
+  transform: scale(1.05);
+}
+
+@media (max-width: 1700px) {
+  .imageList {
+    width: 60%;
+  }
+}
+
+@media (max-width: 1450px) {
+  .imageList {
+    width: 70%;
+  }
+}
+
+@media (max-width: 1300px) {
+  .imageList {
+    width: 70%;
+  }
+}
+
+@media (max-width: 1200px) {
+  .imageList {
+    padding: 0 3rem;
+  }
+}
+
+@media (max-width: 1000px) {
+  .imageList {
+    width: 70%;
+  }
+}
+
+@media (max-width: 790px) {
+  .imageList {
+    width: 75%;
+  }
+}
+
+@media (max-width: 500px) {
+  .imageList {
+    width: 90%;
+  }
+
+  .imageItem {
+    width: auto;
+  }
 }

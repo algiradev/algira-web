@@ -26,11 +26,11 @@ type Props = {
 };
 
 const RaffleDetail = ({ raffle }: Props) => {
-  const [index, setIndex] = useState<number>(0);
   const [open, setOpen] = useState<boolean>(false);
   const [selectedImage, setSelectedImage] = useState<string>(
     raffle.product.image?.[0] || "/algira.svg"
   );
+  const [lightboxIndex, setLightboxIndex] = useState(0);
 
   const { cart } = useCart();
 
@@ -63,7 +63,7 @@ const RaffleDetail = ({ raffle }: Props) => {
 
           <Lightbox
             open={open}
-            index={index}
+            index={lightboxIndex}
             close={() => setOpen(false)}
             slides={(raffle.product.image ?? []).map((img) => ({
               src: img || "/algira.svg",
@@ -138,7 +138,10 @@ const RaffleDetail = ({ raffle }: Props) => {
           <ProductSlider
             images={raffle.product.image ?? ["/algira.svg"]}
             alt={raffle.product.title}
-            onSelect={setSelectedImage}
+            onSelect={(img: string, i: number) => {
+              setSelectedImage(img);
+              setLightboxIndex(i);
+            }}
           />
         </div>
       </div>

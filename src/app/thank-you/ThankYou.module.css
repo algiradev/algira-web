@@ -2,8 +2,10 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
+  min-height: 80vh;
   background-color: transparent;
+  margin-top: 6rem;
+  margin-bottom: 2.5rem;
 }
 
 .card {
