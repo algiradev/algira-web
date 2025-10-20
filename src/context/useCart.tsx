@@ -18,6 +18,7 @@ export type CartItem = {
   productImage: string;
   tickets: MyTicket[];
   price?: number;
+  endDate?: string;
 };
 
 type CartContextType = {
@@ -80,6 +81,7 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
                 price: item.price ?? c.price ?? 0,
                 title: item.title ?? c.title,
                 productImage: item.productImage ?? c.productImage,
+                endDate: item.endDate ?? c.endDate,
               }
             : c
         );
@@ -142,6 +144,7 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
             productImage: currentItem.productImage,
             price: currentItem.price,
             tickets: ticketsToKeep,
+            endDate: currentItem.endDate,
           });
         }
       }
