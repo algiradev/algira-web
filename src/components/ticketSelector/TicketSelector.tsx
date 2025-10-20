@@ -151,6 +151,15 @@ export default function TicketSelector({
     });
   };
 
+  if (blocked) {
+    return (
+      <div className={styles.wrapper}>
+        <h2>Las compras para esta rifa se han cerrado</h2>
+        <p>El sorteo comenzará en breve. ¡Suerte!</p>
+      </div>
+    );
+  }
+
   return (
     <div className={styles.wrapper}>
       <h2 className={styles.title}>
@@ -169,6 +178,7 @@ export default function TicketSelector({
               title: raffle.title ?? "",
               productImage: raffle.product.image?.[0] ?? "",
               price: raffle.price ?? 0,
+              endDate: raffle.endDate,
               tickets: selected.map((ticket) => ({
                 id: ticket.id,
                 code: String(ticket.number),
